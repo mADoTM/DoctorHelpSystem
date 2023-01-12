@@ -7,6 +7,7 @@ import java.sql.Date;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class Notification {
     @Setter(AccessLevel.NONE)
     private long id;

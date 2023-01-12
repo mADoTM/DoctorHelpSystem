@@ -7,6 +7,7 @@ import java.sql.Date;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class TelephoneSurvey {
     @Setter(AccessLevel.NONE)
     private long id;

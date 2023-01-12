@@ -1,9 +1,6 @@
 package com.dolzhenko_m_s.doctorhelpsystem.models;
 
-import lombok.AccessLevel;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -11,6 +8,7 @@ import java.sql.Date;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class AnalysisResult {
     @Setter(AccessLevel.NONE)
     private long id;

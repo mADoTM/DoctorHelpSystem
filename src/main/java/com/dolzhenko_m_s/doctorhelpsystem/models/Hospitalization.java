@@ -1,13 +1,11 @@
 package com.dolzhenko_m_s.doctorhelpsystem.models;
 
-import lombok.AccessLevel;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.jetbrains.annotations.NotNull;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class Hospitalization {
     @Setter(AccessLevel.NONE)
     private long id;
