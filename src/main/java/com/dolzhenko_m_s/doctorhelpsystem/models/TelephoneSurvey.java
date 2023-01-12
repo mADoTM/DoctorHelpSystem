@@ -41,7 +41,7 @@ public class TelephoneSurvey {
 
     private boolean regularlyTakePills;
 
-    private boolean drinkingWaterNormally;
+    private boolean drinkingWater1500ml;
 
     private boolean isSaltRestricted;
 
