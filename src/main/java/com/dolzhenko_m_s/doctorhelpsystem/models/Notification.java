@@ -16,4 +16,6 @@ public class Notification {
     private @NotNull Date date;
 
     private @NotNull String action;
+
+    private boolean executed;
 }
