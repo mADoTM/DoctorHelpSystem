@@ -17,7 +17,7 @@ public class AnalysisResult {
 
     private int patientId;
 
-    private @Nullable String resultName;
+    private @Nullable String analysisName;
 
     private @NotNull String result;
 
