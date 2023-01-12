@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.sql.Date;
 
@@ -15,6 +16,8 @@ public class AnalysisResult {
     private long id;
 
     private int patientId;
+
+    private @Nullable String resultName;
 
     private @NotNull String result;
 
