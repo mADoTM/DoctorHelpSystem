@@ -12,7 +12,7 @@ public class Notification {
     @Setter(AccessLevel.NONE)
     private long id;
 
-    private int patientId;
+    private long patientId;
 
     private @NotNull Date date;
 
