@@ -13,7 +13,7 @@ CREATE TABLE notification
     notification_id SERIAL,
     date DATE NOT NULL,
     patient_id INT REFERENCES patient (patient_id) ON UPDATE CASCADE ON DELETE CASCADE,
-    address VARCHAR NOT NULL,
+    action VARCHAR NOT NULL,
     executed BOOL NOT NULL,
     CONSTRAINT notification_pk PRIMARY KEY (notification_id)
 );
