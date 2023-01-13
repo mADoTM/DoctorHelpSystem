@@ -21,5 +21,5 @@ public class AnalysisResult {
 
     private @NotNull Date executedAnalysisDate;
 
-    private @NotNull Date nextAnalysisDate;
+    private @Nullable Date nextAnalysisDate;
 }
