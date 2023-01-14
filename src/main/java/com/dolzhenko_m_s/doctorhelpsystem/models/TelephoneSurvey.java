@@ -14,7 +14,7 @@ public class TelephoneSurvey {
 
     private int patientId;
 
-    private @NotNull Date date;
+    private @NotNull Date executedDate;
 
     private int hospitalizationId;
 
