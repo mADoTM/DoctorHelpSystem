@@ -42,7 +42,7 @@ CREATE TABLE telephone_survey
     telephone_survey_id SERIAL,
     patient_id INT REFERENCES patient (patient_id) ON UPDATE CASCADE ON DELETE CASCADE,
     executed_date DATE NOT NULL,
-    hospitalization_id INT REFERENCES hospitalization (hospitalization_id) ON UPDATE CASCADE ON DELETE CASCADE,
+    hospitalization_id INT,
     is_independent BOOL,
     has_family BOOL,
     is_dyspnea_progressive BOOL,
