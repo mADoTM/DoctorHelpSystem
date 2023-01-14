@@ -19,7 +19,7 @@ public class AnalysisResultDAO {
 
     private final @NotNull String SAVE_ANALYSIS_RESULT = "INSERT INTO analysis_result (executed_date, patient_id, result, next_date, analysis_name) VALUES (?, ?, ?, ?, ?)";
 
-    private final @NotNull String UPDATE_ANALYSIS_RESULT = "UPDATE analysis_result SET executed_id = ?, patient_id = ?, result = ?, next_date = ?, analysis_name WHERE analysis_result_id = ?";
+    private final @NotNull String UPDATE_ANALYSIS_RESULT = "UPDATE analysis_result SET executed_id = ?, patient_id = ?, result = ?, next_date = ?, analysis_name = ? WHERE analysis_result_id = ?";
 
     private final @NotNull String REMOVE_ANALYSIS_RESULT = "DELETE FROM analysis_result WHERE analysis_result_id = ?";
 
@@ -83,15 +83,16 @@ public class AnalysisResultDAO {
         return entity;
     }
 
-    public void update(@NotNull Notification entity) {
+    public void update(@NotNull AnalysisResult entity) {
         try (var preparedStatement = DbConnectionHelper
                 .getConnection()
                 .prepareStatement(UPDATE_ANALYSIS_RESULT)) {
-            preparedStatement.setInt(1, (int) entity.getPatientId());
-            preparedStatement.setDate(2, entity.getDate());
-            preparedStatement.setString(3, entity.getAction());
-            preparedStatement.setBoolean(4, entity.isExecuted());
-            preparedStatement.setInt(5, (int) entity.getId());
+            preparedStatement.setInt(2, (int) entity.getPatientId());
+            preparedStatement.setDate(1, entity.getExecutedAnalysisDate());
+            preparedStatement.setDate(4, entity.getNextAnalysisDate());
+            preparedStatement.setString(3, entity.getResult());
+            preparedStatement.setString(5, entity.getAnalysisName());
+            preparedStatement.setInt(6, (int) entity.getId());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
