@@ -13,7 +13,7 @@ public class AnalysisResult {
     @Setter(AccessLevel.NONE)
     private long id;
 
-    private int patientId;
+    private long patientId;
 
     private @Nullable String analysisName;
 

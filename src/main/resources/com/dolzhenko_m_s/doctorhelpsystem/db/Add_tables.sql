@@ -31,8 +31,9 @@ CREATE TABLE analysis_result
     analysis_result_id SERIAL,
     executed_date DATE NOT NULL,
     patient_id INT REFERENCES patient (patient_id) ON UPDATE CASCADE ON DELETE CASCADE,
-    result VARCHAR,
+    result VARCHAR NOT NULL,
     next_date DATE,
+    analysis_name VARCHAR NOT NULL,
     CONSTRAINT analysis_result_pk PRIMARY KEY (analysis_result_id)
 );
 
