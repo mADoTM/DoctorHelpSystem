@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NotificationDao {
+public class NotificationDAO {
     private final @NotNull String SELECT_ALL_NOTIFICATIONS = "SELECT * FROM notification";
 
     private final @NotNull String GET_NOTIFICATION_BY_ID = "SELECT * FROM notification WHERE notification_id = ";

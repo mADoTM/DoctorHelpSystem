@@ -13,11 +13,11 @@ public class TelephoneSurveyDAO {
 
     private final @NotNull String GET_TELEPHONE_SURVEY_BY_ID = "SELECT * FROM telephone_survey WHERE telephone_survey_id = ";
 
-    private final @NotNull String GET_TELEPHONE_SURVEY_BY_ALL_FIELDS = "SELECT * FROM telephone_survey WHERE executed_date = ? AND patient_id = ? AND hospitalization_id = ? AND  is_independent = ? AND has_family = ? AND is_dyspnea_progressive = ? AND is_idema_increase = ? AND has_heart_interruptions = ? AND has_pain_during_physical = ? AND has_everyday_control = ? AND upper_blood_pressure = ? AND lower_blood_pressure = ? AND heart_rate = ? AND mass = ? AND regularly_take_pills = ? AND drinking_water_1500ml = ? AND is_salt_restricted = ? AND decreased_exercise_tolerance = ? AND is_smoking = ? AND is_drinking_alcohol = ? AND treat_plan = ? AND next_survey_date = ?";
+    private final @NotNull String GET_TELEPHONE_SURVEY_BY_ALL_FIELDS = "SELECT * FROM telephone_survey WHERE executed_date = ? AND patient_id = ? AND hospitalization_id = ? AND  is_independent = ? AND has_family = ? AND is_dyspnea_progressive = ? AND is_idema_increase = ? AND has_heart_interruptions = ? AND has_pain_during_physical = ? AND has_everyday_control = ? AND upper_blood_pressure = ? AND lower_blood_pressure = ? AND heart_rate = ? AND mass = ? AND is_mass_changed = ? AND regularly_take_pills = ? AND forgot_take_pills = ? AND drinking_water_1500ml = ? AND is_salt_restricted = ? AND decreased_exercise_tolerance = ? AND is_smoking = ? AND is_drinking_alcohol = ? AND treat_plan = ? AND next_survey_date = ?";
 
-    private final @NotNull String SAVE_TELEPHONE_SURVEY = "INSERT INTO telephone_survey (executed_date, patient_id, hospitalization_id, is_independent, has_family, is_dyspnea_progressive, is_idema_increase, has_heart_interruptions, has_pain_during_physical, has_everyday_control, upper_blood_pressure, lower_blood_pressure, heart_rate, mass, regularly_take_pills, drinking_water_1500ml, is_salt_restricted, decreased_exercise_tolerance, is_smoking, is_drinking_alcohol, treat_plan, next_survey_date) VALUES (?, ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    private final @NotNull String SAVE_TELEPHONE_SURVEY = "INSERT INTO telephone_survey (executed_date, patient_id, hospitalization_id, is_independent, has_family, is_dyspnea_progressive, is_idema_increase, has_heart_interruptions, has_pain_during_physical, has_everyday_control, upper_blood_pressure, lower_blood_pressure, heart_rate, mass, is_mass_changed, regularly_take_pills, forgot_take_pills, drinking_water_1500ml, is_salt_restricted, decreased_exercise_tolerance, is_smoking, is_drinking_alcohol, treat_plan, next_survey_date) VALUES (?, ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
-    private final @NotNull String UPDATE_ANALYSIS_RESULT = "UPDATE telephone_survey SET executed_date = ?, patient_id = ?, hospitalization_id = ?, is_independent = ?, has_family = ?, is_dyspnea_progressive = ?, is_idema_increase = ?, has_heart_interruptions = ?, has_pain_during_physical = ?, has_everyday_control = ?, upper_blood_pressure = ?, lower_blood_pressure = ?, heart_rate = ?, mass = ?, regularly_take_pills = ?, drinking_water_1500ml = ?, is_salt_restricted = ?, decreased_exercise_tolerance = ?, is_smoking = ?, is_drinking_alcohol = ?, treat_plan = ?, next_survey_date = ? WHERE telephone_survey_id = ?";
+    private final @NotNull String UPDATE_ANALYSIS_RESULT = "UPDATE telephone_survey SET executed_date = ?, patient_id = ?, hospitalization_id = ?, is_independent = ?, has_family = ?, is_dyspnea_progressive = ?, is_idema_increase = ?, has_heart_interruptions = ?, has_pain_during_physical = ?, has_everyday_control = ?, upper_blood_pressure = ?, lower_blood_pressure = ?, heart_rate = ?, mass = ?, is_mass_changed = ?, regularly_take_pills = ?, forgot_take_pills = ?, drinking_water_1500ml = ?, is_salt_restricted = ?, decreased_exercise_tolerance = ?, is_smoking = ?, is_drinking_alcohol = ?, treat_plan = ?, next_survey_date = ? WHERE telephone_survey_id = ?";
 
     private final @NotNull String REMOVE_TELEPHONE_SURVEY = "DELETE FROM telephone_survey WHERE telephone_survey_id = ?";
 
@@ -40,7 +40,9 @@ public class TelephoneSurveyDAO {
                             resultSet.getDouble("lower_blood_pressure"),
                             resultSet.getInt("heart_rate"),
                             resultSet.getDouble("mass"),
+                            resultSet.getBoolean("is_mass_changed"),
                             resultSet.getBoolean("regularly_take_pills"),
+                            resultSet.getBoolean("forgot_take_pills"),
                             resultSet.getBoolean("drinking_water_1500ml"),
                             resultSet.getBoolean("is_salt_restricted"),
                             resultSet.getBoolean("decreased_exercise_tolerance"),
@@ -78,7 +80,9 @@ public class TelephoneSurveyDAO {
                             resultSet.getDouble("lower_blood_pressure"),
                             resultSet.getInt("heart_rate"),
                             resultSet.getDouble("mass"),
+                            resultSet.getBoolean("is_mass_changed"),
                             resultSet.getBoolean("regularly_take_pills"),
+                            resultSet.getBoolean("forgot_take_pills"),
                             resultSet.getBoolean("drinking_water_1500ml"),
                             resultSet.getBoolean("is_salt_restricted"),
                             resultSet.getBoolean("decreased_exercise_tolerance"),
@@ -114,14 +118,16 @@ public class TelephoneSurveyDAO {
             preparedStatement.setDouble(12, entity.getLowerBloodPressure());
             preparedStatement.setInt(13, entity.getHeartRate());
             preparedStatement.setDouble(14, entity.getMass());
-            preparedStatement.setBoolean(15, entity.isRegularlyTakePills());
-            preparedStatement.setBoolean(16, entity.isDrinkingWater1500ml());
-            preparedStatement.setBoolean(17, entity.isSaltRestricted());
-            preparedStatement.setBoolean(18, entity.isDecreasedExerciseTolerance());
-            preparedStatement.setBoolean(19, entity.isSmoking());
-            preparedStatement.setBoolean(20, entity.isDrinkingAlcohol());
-            preparedStatement.setString(21, entity.getTreatPlan());
-            preparedStatement.setDate(22, entity.getNextSurvey());
+            preparedStatement.setBoolean(15, entity.isMassChanged());
+            preparedStatement.setBoolean(16, entity.isRegularlyTakePills());
+            preparedStatement.setBoolean(17, entity.isForgotTakePills());
+            preparedStatement.setBoolean(18, entity.isDrinkingWater1500ml());
+            preparedStatement.setBoolean(19, entity.isSaltRestricted());
+            preparedStatement.setBoolean(20, entity.isDecreasedExerciseTolerance());
+            preparedStatement.setBoolean(21, entity.isSmoking());
+            preparedStatement.setBoolean(22, entity.isDrinkingAlcohol());
+            preparedStatement.setString(23, entity.getTreatPlan());
+            preparedStatement.setDate(24, entity.getNextSurvey());
             preparedStatement.executeUpdate();
 
             return(getByFields(entity));
@@ -150,15 +156,17 @@ public class TelephoneSurveyDAO {
             preparedStatement.setDouble(12, entity.getLowerBloodPressure());
             preparedStatement.setInt(13, entity.getHeartRate());
             preparedStatement.setDouble(14, entity.getMass());
-            preparedStatement.setBoolean(15, entity.isRegularlyTakePills());
-            preparedStatement.setBoolean(16, entity.isDrinkingWater1500ml());
-            preparedStatement.setBoolean(17, entity.isSaltRestricted());
-            preparedStatement.setBoolean(18, entity.isDecreasedExerciseTolerance());
-            preparedStatement.setBoolean(19, entity.isSmoking());
-            preparedStatement.setBoolean(20, entity.isDrinkingAlcohol());
-            preparedStatement.setString(21, entity.getTreatPlan());
-            preparedStatement.setDate(22, entity.getNextSurvey());
-            preparedStatement.setInt(23, (int) entity.getId());
+            preparedStatement.setBoolean(15, entity.isMassChanged());
+            preparedStatement.setBoolean(16, entity.isRegularlyTakePills());
+            preparedStatement.setBoolean(17, entity.isForgotTakePills());
+            preparedStatement.setBoolean(18, entity.isDrinkingWater1500ml());
+            preparedStatement.setBoolean(19, entity.isSaltRestricted());
+            preparedStatement.setBoolean(20, entity.isDecreasedExerciseTolerance());
+            preparedStatement.setBoolean(21, entity.isSmoking());
+            preparedStatement.setBoolean(22, entity.isDrinkingAlcohol());
+            preparedStatement.setString(23, entity.getTreatPlan());
+            preparedStatement.setDate(24, entity.getNextSurvey());
+            preparedStatement.setInt(25, (int) entity.getId());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -196,14 +204,16 @@ public class TelephoneSurveyDAO {
             preparedStatement.setDouble(12, entity.getLowerBloodPressure());
             preparedStatement.setInt(13, entity.getHeartRate());
             preparedStatement.setDouble(14, entity.getMass());
-            preparedStatement.setBoolean(15, entity.isRegularlyTakePills());
-            preparedStatement.setBoolean(16, entity.isDrinkingWater1500ml());
-            preparedStatement.setBoolean(17, entity.isSaltRestricted());
-            preparedStatement.setBoolean(18, entity.isDecreasedExerciseTolerance());
-            preparedStatement.setBoolean(19, entity.isSmoking());
-            preparedStatement.setBoolean(20, entity.isDrinkingAlcohol());
-            preparedStatement.setString(21, entity.getTreatPlan());
-            preparedStatement.setDate(22, entity.getNextSurvey());
+            preparedStatement.setBoolean(15, entity.isMassChanged());
+            preparedStatement.setBoolean(16, entity.isRegularlyTakePills());
+            preparedStatement.setBoolean(17, entity.isForgotTakePills());
+            preparedStatement.setBoolean(18, entity.isDrinkingWater1500ml());
+            preparedStatement.setBoolean(19, entity.isSaltRestricted());
+            preparedStatement.setBoolean(20, entity.isDecreasedExerciseTolerance());
+            preparedStatement.setBoolean(21, entity.isSmoking());
+            preparedStatement.setBoolean(22, entity.isDrinkingAlcohol());
+            preparedStatement.setString(23, entity.getTreatPlan());
+            preparedStatement.setDate(24, entity.getNextSurvey());
             preparedStatement.execute();
             try (var resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
@@ -222,7 +232,9 @@ public class TelephoneSurveyDAO {
                             resultSet.getDouble("lower_blood_pressure"),
                             resultSet.getInt("heart_rate"),
                             resultSet.getDouble("mass"),
+                            resultSet.getBoolean("is_mass_changed"),
                             resultSet.getBoolean("regularly_take_pills"),
+                            resultSet.getBoolean("forgot_take_pills"),
                             resultSet.getBoolean("drinking_water_1500ml"),
                             resultSet.getBoolean("is_salt_restricted"),
                             resultSet.getBoolean("decreased_exercise_tolerance"),

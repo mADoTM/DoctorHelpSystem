@@ -13,11 +13,11 @@ public class PatientDAO {
 
     private final @NotNull String GET_PATIENT_BY_ID = "SELECT * FROM patient WHERE patient_id = ";
 
-    private final @NotNull String GET_PATIENT_BY_ALL_FIELDS = "SELECT * FROM patient WHERE name = ? AND phone = ? AND address = ? AND diagnosis = ?";
+    private final @NotNull String GET_PATIENT_BY_ALL_FIELDS = "SELECT * FROM patient WHERE name = ? AND phone = ? AND address = ? AND diagnosis = ? AND birth_date = ? AND remark = ?";
 
-    private final @NotNull String SAVE_PATIENT = "INSERT INTO patient (name, phone, address, diagnosis) VALUES (?, ?, ?, ?)";
+    private final @NotNull String SAVE_PATIENT = "INSERT INTO patient (name, phone, address, diagnosis, birth_date, remark) VALUES (?, ?, ?, ?, ?, ?)";
 
-    private final @NotNull String UPDATE_PATIENT = "UPDATE patient SET name = ?, phone = ?, address = ?, diagnosis = ? WHERE patient_id = ?";
+    private final @NotNull String UPDATE_PATIENT = "UPDATE patient SET name = ?, phone = ?, address = ?, diagnosis = ?, birth_date = ?, remark = ? WHERE patient_id = ?";
 
     private final @NotNull String REMOVE_PATIENT = "DELETE FROM patient WHERE patient_id = ?";
 
@@ -29,7 +29,9 @@ public class PatientDAO {
                             resultSet.getString("name"),
                             resultSet.getString("phone"),
                             resultSet.getString("address"),
-                            resultSet.getString("diagnosis"));
+                            resultSet.getString("diagnosis"),
+                            resultSet.getDate("birth_date"),
+                            resultSet.getString("remark"));
                 }
             }
         } catch (SQLException e) {
@@ -47,7 +49,9 @@ public class PatientDAO {
                             resultSet.getString("name"),
                             resultSet.getString("phone"),
                             resultSet.getString("address"),
-                            resultSet.getString("diagnosis")));
+                            resultSet.getString("diagnosis"),
+                            resultSet.getDate("birth_date"),
+                            resultSet.getString("remark")));
                 }
                 return result;
             }
@@ -64,6 +68,8 @@ public class PatientDAO {
             preparedStatement.setString(2, entity.getPhoneNumber());
             preparedStatement.setString(3, entity.getAddress());
             preparedStatement.setString(4, entity.getDiagnosis());
+            preparedStatement.setDate(5, entity.getBirthDate());
+            preparedStatement.setString(6, entity.getRemark());
             preparedStatement.executeUpdate();
 
             entity = getByFields(entity);
@@ -80,7 +86,9 @@ public class PatientDAO {
             preparedStatement.setString(2, entity.getPhoneNumber());
             preparedStatement.setString(3, entity.getAddress());
             preparedStatement.setString(4, entity.getDiagnosis());
-            preparedStatement.setInt(5, (int) entity.getId());
+            preparedStatement.setDate(5, entity.getBirthDate());
+            preparedStatement.setString(6, entity.getRemark());
+            preparedStatement.setInt(7, (int) entity.getId());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -104,6 +112,8 @@ public class PatientDAO {
             preparedStatement.setString(2, patient.getPhoneNumber());
             preparedStatement.setString(3, patient.getAddress());
             preparedStatement.setString(4, patient.getDiagnosis());
+            preparedStatement.setDate(5, patient.getBirthDate());
+            preparedStatement.setString(6, patient.getRemark());
             preparedStatement.execute();
             try (var resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
@@ -111,7 +121,9 @@ public class PatientDAO {
                             resultSet.getString("name"),
                             resultSet.getString("phone"),
                             resultSet.getString("address"),
-                            resultSet.getString("diagnosis"));
+                            resultSet.getString("diagnosis"),
+                            resultSet.getDate("birth_date"),
+                            resultSet.getString("remark"));
                 }
             }
 

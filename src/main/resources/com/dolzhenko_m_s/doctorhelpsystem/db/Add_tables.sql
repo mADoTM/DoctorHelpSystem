@@ -5,6 +5,8 @@ CREATE TABLE patient
     phone VARCHAR NOT NULL,
     address VARCHAR NOT NULL,
     diagnosis VARCHAR NOT NULL,
+    birth_date DATE NOT NULL,
+    remark VARCHAR NOT NULL,
     CONSTRAINT patient_pk PRIMARY KEY (patient_id)
 );
 
@@ -22,6 +24,7 @@ CREATE TABLE hospitalization
 (
     hospitalization_id SERIAL,
     is_emergency BOOL NOT NULL,
+    count INT NOT NULL,
     reason VARCHAR NOT NULL,
     CONSTRAINT hospitalization_pk PRIMARY KEY (hospitalization_id)
 );
@@ -54,7 +57,9 @@ CREATE TABLE telephone_survey
     lower_blood_pressure NUMERIC,
     heart_rate NUMERIC,
     mass NUMERIC,
+    is_mass_changed BOOL,
     regularly_take_pills BOOL,
+    forgot_take_pills BOOL,
     drinking_water_1500ml BOOL,
     is_salt_restricted BOOL,
     decreased_exercise_tolerance BOOL,

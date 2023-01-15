@@ -65,6 +65,13 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.10.1</version>
                 <configuration>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>1.18.24</version>
+                        </path>
+                    </annotationProcessorPaths>
                     <source>18</source>
                     <target>18</target>
                 </configuration>
@@ -79,7 +86,7 @@
                         <id>default-cli</id>
                         <configuration>
                             <mainClass>
-                                com.dolzhenko_m_s.doctorhelpsystem/com.dolzhenko_m_s.doctorhelpsystem.HelloApplication
+                                com.dolzhenko_m_s.doctorhelpsystem/com.dolzhenko_m_s.doctorhelpsystem.MainApplication
                             </mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>

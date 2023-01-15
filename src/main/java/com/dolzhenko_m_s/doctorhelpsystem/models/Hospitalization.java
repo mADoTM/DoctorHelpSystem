@@ -12,5 +12,8 @@ public class Hospitalization {
 
     private boolean isEmergency;
 
+    private int count;
+
     private @NotNull String reason;
+
 }

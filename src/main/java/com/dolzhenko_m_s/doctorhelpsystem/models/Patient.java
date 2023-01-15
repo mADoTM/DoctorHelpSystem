@@ -3,6 +3,8 @@ package com.dolzhenko_m_s.doctorhelpsystem.models;
 import lombok.*;
 import org.jetbrains.annotations.NotNull;
 
+import java.sql.Date;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -17,4 +19,8 @@ public class Patient {
     private @NotNull String address;
 
     private @NotNull String diagnosis;
+
+    private @NotNull Date birthDate;
+
+    private @NotNull String remark;
 }

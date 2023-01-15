@@ -40,7 +40,11 @@ public class TelephoneSurvey {
 
     private double mass;
 
+    private boolean isMassChanged;
+
     private boolean regularlyTakePills;
+
+    private boolean forgotTakePills;
 
     private boolean drinkingWater1500ml;
 

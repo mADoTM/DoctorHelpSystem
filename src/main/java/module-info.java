@@ -8,4 +8,5 @@ module com.dolzhenko_m_s.doctorhelpsystem {
 
     opens com.dolzhenko_m_s.doctorhelpsystem to javafx.fxml;
     exports com.dolzhenko_m_s.doctorhelpsystem;
+    exports com.dolzhenko_m_s.doctorhelpsystem.models;
 }

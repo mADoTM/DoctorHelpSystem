@@ -1,0 +1,407 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.collections.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="454.0" prefWidth="559.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dolzhenko_m_s.doctorhelpsystem.TelephoneSurveyController">
+    <ScrollPane hbarPolicy="NEVER" maxHeight="400.0" vbarPolicy="ALWAYS" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <AnchorPane>
+            <VBox AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="7.0" AnchorPane.topAnchor="10.0">
+                <HBox>
+                    <Label layoutX="7.0" layoutY="14.0" prefHeight="17.0" prefWidth="300.0" text="Проведен" />
+                    <DatePicker fx:id="executedDate" layoutX="62.0" layoutY="10.0" prefWidth="174.0">
+                        <HBox.margin>
+                            <Insets left="50.0" />
+                        </HBox.margin>
+                    </DatePicker>
+                </HBox>
+                <HBox>
+                    <Label layoutX="7.0" layoutY="14.0" prefHeight="17.0" prefWidth="300.0" text="Были ли госпитализации" />
+                    <ChoiceBox onAction="#switchHospitalization" fx:id="hasHospitalization" layoutX="62.0" layoutY="42.0" prefHeight="25.0" prefWidth="175.0" value="Нет">
+                        <items>
+                            <FXCollections fx:factory="observableArrayList">
+                                <String fx:value="Нет" />
+                                <String fx:value="Да" />
+                            </FXCollections>
+                        </items>
+                        <HBox.margin>
+                            <Insets left="50.0" />
+                        </HBox.margin>
+                    </ChoiceBox>
+                    <VBox.margin>
+                        <Insets top="5.0" />
+                    </VBox.margin>
+                </HBox>
+                <HBox>
+                    <Label layoutX="7.0" layoutY="14.0" prefHeight="17.0" prefWidth="300.0" text="Плановые/экстренные?" />
+                    <ChoiceBox fx:id="isEmergency" layoutX="62.0" layoutY="42.0" prefHeight="25.0" prefWidth="175.0" value="Плановые">
+                        <items>
+                            <FXCollections fx:factory="observableArrayList">
+                                <String fx:value="Плановые" />
+                                <String fx:value="Экстренные" />
+                            </FXCollections>
+                        </items>
+                        <HBox.margin>
+                            <Insets left="50.0" />
+                        </HBox.margin>
+                    </ChoiceBox>
+                    <VBox.margin>
+                        <Insets top="5.0" />
+                    </VBox.margin>
+                </HBox>
+                <HBox>
+                    <Label layoutX="7.0" layoutY="14.0" prefHeight="17.0" prefWidth="300.0" text="Количество госпитализаций" />
+                    <TextField fx:id="countHospitalizations" prefHeight="25.0" prefWidth="40.0">
+                        <HBox.margin>
+                            <Insets left="50.0" />
+                        </HBox.margin>
+                    </TextField>
+                    <VBox.margin>
+                        <Insets top="5.0" />
+                    </VBox.margin>
+                </HBox>
+                <HBox>
+                    <Label layoutX="7.0" layoutY="14.0" prefHeight="17.0" prefWidth="300.0" text="Причины госпитализаций" />
+                    <TextField fx:id="hospitalizationReason" prefHeight="25.0" prefWidth="40.0">
+                        <HBox.margin>
+                            <Insets left="50.0" />
+                        </HBox.margin>
+                    </TextField>
+                    <VBox.margin>
+                        <Insets top="5.0" />
+                    </VBox.margin>
+                </HBox>
+                <HBox>
+                    <Label layoutX="7.0" layoutY="14.0" prefHeight="17.0" prefWidth="300.0" text="Сохранена ли способность к самообслуживанию" />
+                    <ChoiceBox fx:id="isIndependent" layoutX="62.0" layoutY="42.0" prefHeight="25.0" prefWidth="175.0" value="Нет">
+                        <items>
+                            <FXCollections fx:factory="observableArrayList">
+                                <String fx:value="Нет" />
+                                <String fx:value="Да" />
+                            </FXCollections>
+                        </items>
+                        <HBox.margin>
+                            <Insets left="50.0" />
+                        </HBox.margin>
+                    </ChoiceBox>
+                    <VBox.margin>
+                        <Insets top="5.0" />
+                    </VBox.margin>
+                </HBox>
+                <HBox>
+                    <Label layoutX="7.0" layoutY="14.0" prefHeight="17.0" prefWidth="300.0" text="Если семья/лица, которые могли бы помочь" />
+                    <ChoiceBox fx:id="hasFamily" layoutX="62.0" layoutY="42.0" prefHeight="25.0" prefWidth="175.0" value="Нет">
+                        <items>
+                            <FXCollections fx:factory="observableArrayList">
+                                <String fx:value="Нет" />
+                                <String fx:value="Да" />
+                            </FXCollections>
+                        </items>
+                        <HBox.margin>
+                            <Insets left="50.0" />
+                        </HBox.margin>
+                    </ChoiceBox>
+                    <VBox.margin>
+                        <Insets top="5.0" />
+                    </VBox.margin>
+                </HBox>
+                <HBox prefWidth="311.0">
+                    <Label layoutX="7.0" layoutY="14.0" prefHeight="17.0" prefWidth="300.0" text="Прогрессирование одышки" />
+                    <ChoiceBox fx:id="progressiveDyspnea" layoutX="62.0" layoutY="42.0" prefHeight="25.0" prefWidth="175.0" value="Нет">
+                        <items>
+                            <FXCollections fx:factory="observableArrayList">
+                                <String fx:value="Нет" />
+                                <String fx:value="Да" />
+                            </FXCollections>
+                        </items>
+                        <HBox.margin>
+                            <Insets left="50.0" />
+                        </HBox.margin>
+                    </ChoiceBox>
+                    <VBox.margin>
+                        <Insets top="5.0" />
+                    </VBox.margin>
+                </HBox>
+                <HBox>
+                    <Label layoutX="7.0" layoutY="14.0" prefHeight="17.0" prefWidth="300.0" text="Нарастание отеков, уровень" />
+                    <ChoiceBox fx:id="isEdemaIncrease" layoutX="62.0" layoutY="42.0" prefHeight="25.0" prefWidth="175.0" value="Нет">
+                        <items>
+                            <FXCollections fx:factory="observableArrayList">
+                                <String fx:value="Нет" />
+                                <String fx:value="Да" />
+                            </FXCollections>
+                        </items>
+                        <HBox.margin>
+                            <Insets left="50.0" />
+                        </HBox.margin>
+                    </ChoiceBox>
+                    <VBox.margin>
+                        <Insets top="5.0" />
+                    </VBox.margin>
+                </HBox>
+                <HBox>
+                    <Label layoutX="7.0" layoutY="14.0" prefHeight="17.0" prefWidth="300.0" text="Сердцебиение/перебои" />
+                    <ChoiceBox  fx:id="hasHeartInterruptions" layoutX="62.0" layoutY="42.0" prefHeight="25.0" prefWidth="175.0" value="Нет">
+                        <items>
+                            <FXCollections fx:factory="observableArrayList">
+                                <String fx:value="Нет" />
+                                <String fx:value="Да" />
+                            </FXCollections>
+                        </items>
+                        <HBox.margin>
+                            <Insets left="50.0" />
+                        </HBox.margin>
+                    </ChoiceBox>
+                    <VBox.margin>
+                        <Insets top="5.0" />
+                    </VBox.margin>
+                </HBox>
+                <HBox>
+                    <Label layoutX="7.0" layoutY="14.0" prefHeight="17.0" prefWidth="300.0" text="Боль за грудиной при физической нагрузке " />
+                    <ChoiceBox fx:id="hasPainDuringPhysicalExercise" layoutX="62.0" layoutY="42.0" prefHeight="25.0" prefWidth="175.0" value="Нет">
+                        <items>
+                            <FXCollections fx:factory="observableArrayList">
+                                <String fx:value="Нет" />
+                                <String fx:value="Да" />
+                            </FXCollections>
+                        </items>
+                        <HBox.margin>
+                            <Insets left="50.0" />
+                        </HBox.margin>
+                    </ChoiceBox>
+                    <VBox.margin>
+                        <Insets top="5.0" />
+                    </VBox.margin>
+                </HBox>
+                <HBox>
+                    <Label layoutX="7.0" layoutY="14.0" prefHeight="17.0" prefWidth="300.0" text="Ежедневный контроль веса, АД, ЧСС" />
+                    <ChoiceBox fx:id="hasEveryDayControl" layoutX="62.0" layoutY="42.0" prefHeight="25.0" prefWidth="175.0" value="Нет">
+                        <items>
+                            <FXCollections fx:factory="observableArrayList">
+                                <String fx:value="Нет" />
+                                <String fx:value="Да" />
+                            </FXCollections>
+                        </items>
+                        <HBox.margin>
+                            <Insets left="50.0" />
+                        </HBox.margin>
+                    </ChoiceBox>
+                    <VBox.margin>
+                        <Insets top="5.0" />
+                    </VBox.margin>
+                </HBox>
+                <HBox>
+                    <Label layoutX="7.0" layoutY="14.0" prefHeight="17.0" prefWidth="300.0" text="Вес, кг" />
+                    <TextField fx:id="mass" prefHeight="25.0" prefWidth="40.0">
+                        <HBox.margin>
+                            <Insets left="50.0" />
+                        </HBox.margin>
+                    </TextField>
+                    <VBox.margin>
+                        <Insets top="5.0" />
+                    </VBox.margin>
+                </HBox>
+                <HBox>
+                    <Label layoutX="7.0" layoutY="14.0" prefHeight="17.0" prefWidth="300.0" text="Изменился ли вес" />
+                    <ChoiceBox fx:id="isMassChanged" layoutX="62.0" layoutY="42.0" prefHeight="25.0" prefWidth="175.0" value="Нет">
+                        <items>
+                            <FXCollections fx:factory="observableArrayList">
+                                <String fx:value="Нет" />
+                                <String fx:value="Да" />
+                            </FXCollections>
+                        </items>
+                        <HBox.margin>
+                            <Insets left="50.0" />
+                        </HBox.margin>
+                    </ChoiceBox>
+                    <VBox.margin>
+                        <Insets top="5.0" />
+                    </VBox.margin>
+                </HBox>
+                <HBox>
+                    <Label layoutX="7.0" layoutY="14.0" prefHeight="17.0" prefWidth="300.0" text="АД, мм рт.ст." />
+                    <TextField fx:id="upperBloodPressure" prefHeight="25.0" prefWidth="40.0">
+                        <HBox.margin>
+                            <Insets left="50.0" />
+                        </HBox.margin>
+                    </TextField>
+
+                    <Label layoutX="7.0" layoutY="14.0" prefHeight="17.0" prefWidth="15.0" text="/">
+                        <HBox.margin>
+                            <Insets left="15.0" top="2.0" />
+                        </HBox.margin>
+                    </Label>
+                    <TextField fx:id="lowerBloodPressure" prefHeight="25.0" prefWidth="40.0" />
+                    <VBox.margin>
+                        <Insets top="5.0" />
+                    </VBox.margin>
+                </HBox>
+                <HBox>
+                    <Label layoutX="7.0" layoutY="14.0" prefHeight="17.0" prefWidth="300.0" text="ЧСС, уд/мин" />
+                    <TextField fx:id="heartRate" prefHeight="25.0" prefWidth="40.0">
+                        <HBox.margin>
+                            <Insets left="50.0" />
+                        </HBox.margin>
+                    </TextField>
+                    <VBox.margin>
+                        <Insets top="5.0" />
+                    </VBox.margin>
+                </HBox>
+
+                <HBox>
+                    <Label layoutX="7.0" layoutY="14.0" prefHeight="17.0" prefWidth="300.0" text="Регулярный прием препаратов" />
+                    <ChoiceBox fx:id="regularlyTakePills" layoutX="62.0" layoutY="42.0" prefHeight="25.0" prefWidth="175.0" value="Нет">
+                        <items>
+                            <FXCollections fx:factory="observableArrayList">
+                                <String fx:value="Нет" />
+                                <String fx:value="Да" />
+                            </FXCollections>
+                        </items>
+                        <HBox.margin>
+                            <Insets left="50.0" />
+                        </HBox.margin>
+                    </ChoiceBox>
+                    <VBox.margin>
+                        <Insets top="5.0" />
+                    </VBox.margin>
+                </HBox>
+                <HBox prefHeight="64.0" prefWidth="542.0">
+                    <Label layoutX="7.0" layoutY="14.0" prefHeight="46.0" prefWidth="300.0" text="Забывали принимать препараты/самостоятельно меняли дозировки или лекарства" wrapText="true" />
+                    <ChoiceBox fx:id="forgotTakePills" layoutX="62.0" layoutY="42.0" prefHeight="25.0" prefWidth="175.0" value="Нет">
+                        <items>
+                            <FXCollections fx:factory="observableArrayList">
+                                <String fx:value="Нет" />
+                                <String fx:value="Да" />
+                            </FXCollections>
+                        </items>
+                        <HBox.margin>
+                            <Insets left="50.0" />
+                        </HBox.margin>
+                    </ChoiceBox>
+                    <VBox.margin>
+                        <Insets top="5.0" />
+                    </VBox.margin>
+                </HBox>
+                <HBox>
+                    <Label layoutX="7.0" layoutY="14.0" prefHeight="17.0" prefWidth="300.0" text="Суточный объем жидкости менее 1,5 л" />
+                    <ChoiceBox fx:id="drinkingWater1500ml" layoutX="62.0" layoutY="42.0" prefHeight="25.0" prefWidth="175.0" value="Нет">
+                        <items>
+                            <FXCollections fx:factory="observableArrayList">
+                                <String fx:value="Нет" />
+                                <String fx:value="Да" />
+                            </FXCollections>
+                        </items>
+                        <HBox.margin>
+                            <Insets left="50.0" />
+                        </HBox.margin>
+                    </ChoiceBox>
+                    <VBox.margin>
+                        <Insets top="5.0" />
+                    </VBox.margin>
+                </HBox>
+                <HBox>
+                    <Label layoutX="7.0" layoutY="14.0" prefHeight="17.0" prefWidth="300.0" text="Ограничение соли менее 5 г/сутки" />
+                    <ChoiceBox fx:id="isSaltRestricted" layoutX="62.0" layoutY="42.0" prefHeight="25.0" prefWidth="175.0" value="Нет">
+                        <items>
+                            <FXCollections fx:factory="observableArrayList">
+                                <String fx:value="Нет" />
+                                <String fx:value="Да" />
+                            </FXCollections>
+                        </items>
+                        <HBox.margin>
+                            <Insets left="50.0" />
+                        </HBox.margin>
+                    </ChoiceBox>
+                    <VBox.margin>
+                        <Insets top="5.0" />
+                    </VBox.margin>
+                </HBox>
+                <HBox>
+                    <Label layoutX="7.0" layoutY="14.0" prefHeight="17.0" prefWidth="300.0" text="Снизилась ли переносимость физ. нагрузок" />
+                    <ChoiceBox fx:id="decreasedExerciseTolerance" layoutX="62.0" layoutY="42.0" prefHeight="25.0" prefWidth="175.0" value="Нет">
+                        <items>
+                            <FXCollections fx:factory="observableArrayList">
+                                <String fx:value="Нет" />
+                                <String fx:value="Да" />
+                            </FXCollections>
+                        </items>
+                        <HBox.margin>
+                            <Insets left="50.0" />
+                        </HBox.margin>
+                    </ChoiceBox>
+                    <VBox.margin>
+                        <Insets top="5.0" />
+                    </VBox.margin>
+                </HBox>
+                <HBox>
+                    <Label layoutX="7.0" layoutY="14.0" prefHeight="17.0" prefWidth="300.0" text="Курение" />
+                    <ChoiceBox fx:id="isSmoking" layoutX="62.0" layoutY="42.0" prefHeight="25.0" prefWidth="175.0" value="Нет">
+                        <items>
+                            <FXCollections fx:factory="observableArrayList">
+                                <String fx:value="Нет" />
+                                <String fx:value="Да" />
+                            </FXCollections>
+                        </items>
+                        <HBox.margin>
+                            <Insets left="50.0" />
+                        </HBox.margin>
+                    </ChoiceBox>
+                    <VBox.margin>
+                        <Insets top="5.0" />
+                    </VBox.margin>
+                </HBox>
+                <HBox>
+                    <Label layoutX="7.0" layoutY="14.0" prefHeight="17.0" prefWidth="300.0" text="Алкоголь" />
+                    <ChoiceBox fx:id="isDrinkingAlcohol" layoutX="62.0" layoutY="42.0" prefHeight="25.0" prefWidth="175.0" value="Нет">
+                        <items>
+                            <FXCollections fx:factory="observableArrayList">
+                                <String fx:value="Нет" />
+                                <String fx:value="Да" />
+                            </FXCollections>
+                        </items>
+                        <HBox.margin>
+                            <Insets left="50.0" />
+                        </HBox.margin>
+                    </ChoiceBox>
+                    <VBox.margin>
+                        <Insets top="5.0" />
+                    </VBox.margin>
+                </HBox>
+                <HBox>
+                    <Label layoutX="7.0" layoutY="14.0" prefHeight="17.0" prefWidth="300.0" text="План наблюдения" />
+                    <ChoiceBox fx:id="treatPlan" layoutX="62.0" layoutY="42.0" prefHeight="25.0" prefWidth="175.0">
+                        <items>
+                            <FXCollections fx:factory="observableArrayList">
+                                <String fx:value="актив на дом" />
+                                <String fx:value="динамическое наблюдение" />
+                                <String fx:value="консультация кардиолога/терапевта амбулаторно" />
+                                <String fx:value="консультация кабинета ХСН амбулаторно" />
+                            </FXCollections>
+                        </items>
+                        <HBox.margin>
+                            <Insets left="50.0" />
+                        </HBox.margin>
+                    </ChoiceBox>
+                    <VBox.margin>
+                        <Insets top="5.0" />
+                    </VBox.margin>
+                </HBox>
+                <HBox>
+                    <Label layoutX="7.0" layoutY="14.0" prefHeight="17.0" prefWidth="300.0" text="Следующий" />
+                    <DatePicker fx:id="nextSurvey"  layoutX="62.0" layoutY="10.0" prefWidth="174.0">
+                        <HBox.margin>
+                            <Insets left="50.0" />
+                        </HBox.margin>
+                    </DatePicker>
+                    <VBox.margin>
+                        <Insets top="5.0" />
+                    </VBox.margin>
+                </HBox>
+            </VBox>
+        </AnchorPane>
+    </ScrollPane>
+    <Button fx:id="saveButton" onAction="#saveSurvey" layoutX="246.0" layoutY="416.0" mnemonicParsing="false" text="Сохранить" />
+</AnchorPane>

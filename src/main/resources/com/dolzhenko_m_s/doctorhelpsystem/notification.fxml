@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane prefHeight="246.0" prefWidth="333.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dolzhenko_m_s.doctorhelpsystem.NotificationController">
+   <children>
+      <Label layoutX="14.0" layoutY="20.0" text="Действие" />
+      <TextArea fx:id="actionArea" layoutX="103.0" layoutY="20.0" prefHeight="54.0" prefWidth="200.0" />
+      <DatePicker fx:id="datePicker" layoutX="103.0" layoutY="87.0" prefHeight="25.0" prefWidth="200.0" />
+      <Label layoutX="14.0" layoutY="91.0" text="Выполнить до" />
+      <CheckBox fx:id="executedBox" layoutX="103.0" layoutY="128.0" mnemonicParsing="false" />
+      <Label layoutX="14.0" layoutY="128.0" text="Выполнено" />
+      <Button fx:id="endActionButton" onAction="#endAction" layoutX="130.0" layoutY="187.0" mnemonicParsing="false" text="Сохранить" />
+   </children>
+</AnchorPane>
