@@ -6,7 +6,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dolzhenko_m_s.doctorhelpsystem.MainController">
+<AnchorPane prefHeight="840.0" prefWidth="633.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dolzhenko_m_s.doctorhelpsystem.MainController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
@@ -30,7 +30,7 @@
                        </FXCollections>
                    </items>
                </ChoiceBox>
-               <Button mnemonicParsing="false" text="Поиск" onAction="#findPatients">
+               <Button mnemonicParsing="false" onAction="#findPatients" text="Поиск">
                   <HBox.margin>
                      <Insets left="10.0" />
                   </HBox.margin>
@@ -43,7 +43,7 @@
          <HBox prefHeight="50.0" prefWidth="200.0">
             <children>
                 <Button fx:id="patientsList" mnemonicParsing="false" onAction="#showPatients" text="Реестр пациентов" />
-                <Button onAction="#addPatient" mnemonicParsing="false" text="+">
+                <Button fx:id="addPatientButton" mnemonicParsing="false" onAction="#addEntity" prefWidth="25.0" text="+">
                     <opaqueInsets>
                         <Insets left="100.0" />
                     </opaqueInsets>
@@ -51,6 +51,11 @@
                         <Insets left="10.0" />
                     </HBox.margin>
                 </Button>
+               <Button fx:id="removePatientButton" onAction="#removeEntity" mnemonicParsing="false" prefWidth="25.0" text="-">
+                  <HBox.margin>
+                     <Insets left="10.0" />
+                  </HBox.margin>
+               </Button>
             </children>
          </HBox>
           <TableView fx:id="patientTable" layoutX="60.0" layoutY="68.0" maxHeight="200.0" maxWidth="600.0" minWidth="100.0" prefHeight="100.0" prefWidth="600.0">
@@ -60,7 +65,7 @@
           <HBox prefHeight="50.0" prefWidth="200.0">
               <children>
                   <Button fx:id="notificationsList" mnemonicParsing="false" onAction="#showPatients" text="Напоминания" />
-                  <Button mnemonicParsing="false" text="+">
+                  <Button fx:id="addNotificationButton" mnemonicParsing="false" onAction="#addEntity" prefWidth="25.0" text="+">
                       <opaqueInsets>
                           <Insets left="100.0" />
                       </opaqueInsets>
@@ -68,6 +73,11 @@
                           <Insets left="10.0" />
                       </HBox.margin>
                   </Button>
+               <Button fx:id="removeNotificationButton" onAction="#removeEntity" mnemonicParsing="false" prefWidth="25.0" text="-">
+                  <HBox.margin>
+                     <Insets left="10.0" />
+                  </HBox.margin>
+               </Button>
               </children>
           </HBox>
           <TableView fx:id="notificationTable" layoutX="60.0" layoutY="68.0" prefHeight="42.0" prefWidth="600.0">

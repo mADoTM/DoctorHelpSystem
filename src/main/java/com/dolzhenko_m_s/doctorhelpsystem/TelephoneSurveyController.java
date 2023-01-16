@@ -92,7 +92,7 @@ public class TelephoneSurveyController {
             isEmergency.setDisable(true);
         }
 
-
+        switchHospitalization(new ActionEvent());
         telephoneSurvey.setPatientId((int) patient.getId());
         saveButton.setText(createdWindow ? "Добавить" : "Сохранить");
     }

@@ -1,9 +1,14 @@
 package com.dolzhenko_m_s.doctorhelpsystem;
 
+import com.dolzhenko_m_s.doctorhelpsystem.dao.AnalysisResultDAO;
+import com.dolzhenko_m_s.doctorhelpsystem.dao.NotificationDAO;
 import com.dolzhenko_m_s.doctorhelpsystem.dao.PatientDAO;
+import com.dolzhenko_m_s.doctorhelpsystem.dao.TelephoneSurveyDAO;
 import com.dolzhenko_m_s.doctorhelpsystem.models.Notification;
 import com.dolzhenko_m_s.doctorhelpsystem.models.Patient;
+import com.dolzhenko_m_s.doctorhelpsystem.services.AnalysisResultService;
 import com.dolzhenko_m_s.doctorhelpsystem.services.NotificationService;
+import com.dolzhenko_m_s.doctorhelpsystem.services.TelephoneSurveyService;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -36,6 +41,10 @@ public class MainController {
     public Button notificationsList;
     public ChoiceBox<String> searchType;
     public TextField searchTag;
+    public Button addPatientButton;
+    public Button addNotificationButton;
+    public Button removeNotificationButton;
+    public Button removePatientButton;
 
     @FXML
     private void initialize() {
@@ -231,16 +240,67 @@ public class MainController {
         }
     }
 
-    public void addPatient(ActionEvent actionEvent) {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("patient.fxml"));
+    public void addEntity(ActionEvent actionEvent) {
+        var button = (Button) actionEvent.getSource();
+        if(button == addPatientButton) {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("patient.fxml"));
+            try {
+                Parent root = loader.load();
+                var medController = (PatientController) loader.getController();
+                Stage stage = new Stage();
+                stage.setScene(new Scene(root));
+                stage.show();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        var selectedItemInPatientTable = patientTable.getSelectionModel().getSelectedItem();
+
+        if(button == addNotificationButton && selectedItemInPatientTable != null) {
+            openNotificationWindow(selectedItemInPatientTable, new Notification());
+        }
+    }
+
+    private void openNotificationWindow(Patient patient, Notification notification) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("notification.fxml"));
         try {
             Parent root = loader.load();
-            var medController = (PatientController) loader.getController();
+            var notificationController = (NotificationController) loader.getController();
+            notificationController.setWindows(patient, notification);
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
             stage.show();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void removeEntity(ActionEvent actionEvent) {
+        var button = (Button) actionEvent.getSource();
+
+        if (button == removePatientButton) {
+            if (patientTable.getSelectionModel().getSelectedItem() != null) {
+                var patient = patientTable.getSelectionModel().getSelectedItem();
+                new PatientDAO().delete(patient);
+            }
+        }
+
+        if (button == removeNotificationButton) {
+            if (notificationTable.getSelectionModel().getSelectedItem() != null) {
+                var notification = notificationTable.getSelectionModel().getSelectedItem();
+                new NotificationDAO().delete(notification);
+            }
+        }
+
+        refreshItemsInTables();
+    }
+
+
+    private void refreshItemsInTables() {
+        findPatients(new ActionEvent());
+
+        notificationTable.getItems().clear();
+        fillNotificationTable(new NotificationService().getByMonthAfter(Date.valueOf(LocalDate.now())));
     }
 }
