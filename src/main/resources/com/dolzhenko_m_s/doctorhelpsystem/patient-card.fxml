@@ -7,14 +7,14 @@
    <children>
       <Label layoutX="10.0" layoutY="21.0" text="ФИО" />
       <TextField fx:id="nameTextField" editable="false" layoutX="91.0" layoutY="14.0" />
-      <Label layoutX="10.0" layoutY="57.0" text="Телефон" />
+      <Label layoutX="10.0" layoutY="58.0" text="Телефон" />
       <TextField fx:id="phoneTextField" editable="false" layoutX="92.0" layoutY="53.0" />
-      <Label layoutX="10.0" layoutY="97.0" text="Адрес" />
+      <Label layoutX="10.0" layoutY="96.0" text="Адрес" />
       <TextField fx:id="addressTextField" editable="false" layoutX="92.0" layoutY="93.0" />
-      <Label layoutX="10.0" layoutY="136.0" text="Диагноз" />
-      <TextField fx:id="diagnosisTextField" editable="false" layoutX="92.0" layoutY="132.0" />
-      <CheckBox fx:id="editCheckBox" layoutX="10.0" layoutY="277.0" mnemonicParsing="false" onAction="#switchEditAbility" text="Редактировать" />
-      <Button fx:id="saveButton" disable="true" layoutX="129.0" layoutY="273.0" mnemonicParsing="false" onAction="#savePatient" text="Сохранить" />
+      <Label layoutX="10.0" layoutY="167.0" text="Диагноз" />
+      <TextField fx:id="diagnosisTextField" editable="false" layoutX="92.0" layoutY="163.0" />
+      <CheckBox fx:id="editCheckBox" layoutX="10.0" layoutY="308.0" mnemonicParsing="false" onAction="#switchEditAbility" text="Редактировать" />
+      <Button fx:id="saveButton" disable="true" layoutX="129.0" layoutY="304.0" mnemonicParsing="false" onAction="#savePatient" text="Сохранить" />
       <TableView fx:id="surveyTable" layoutX="251.0" layoutY="56.0" prefHeight="200.0" prefWidth="300.0">
         <columns>
         </columns>
@@ -34,10 +34,12 @@
       <Button fx:id="removeSurveyButton" layoutX="407.0" layoutY="26.0" mnemonicParsing="false" onAction="#removeEntity" prefHeight="25.0" prefWidth="25.0" text="-" />
       <Button fx:id="removeNotificationButton" layoutX="682.0" layoutY="26.0" mnemonicParsing="false" onAction="#removeEntity" prefHeight="25.0" prefWidth="25.0" text="-" />
       <Button fx:id="removeAnalysisButton" layoutX="205.0" layoutY="369.0" mnemonicParsing="false" onAction="#removeEntity" prefHeight="25.0" prefWidth="25.0" text="-" />
-      <Button layoutX="11.0" layoutY="307.0" mnemonicParsing="false" onAction="#refreshEntities" text="Обновить данные" />
-      <Label layoutX="10.0" layoutY="156.0" prefHeight="57.0" prefWidth="56.0" text="Дата рождения" wrapText="true" />
-      <DatePicker fx:id="datePicker" disable="true" layoutX="92.0" layoutY="171.0" prefHeight="25.0" prefWidth="149.0" />
-      <Label layoutX="10.0" layoutY="213.0" prefHeight="17.0" prefWidth="74.0" text="Примечания" />
-      <TextArea fx:id="remarkArea" disable="true" layoutX="91.0" layoutY="213.0" prefHeight="50.0" prefWidth="149.0" />
+      <Button layoutX="11.0" layoutY="338.0" mnemonicParsing="false" onAction="#refreshEntities" text="Обновить данные" />
+      <Label layoutX="10.0" layoutY="187.0" prefHeight="57.0" prefWidth="56.0" text="Дата рождения" wrapText="true" />
+      <DatePicker fx:id="datePicker" disable="true" layoutX="92.0" layoutY="202.0" prefHeight="25.0" prefWidth="149.0" />
+      <Label layoutX="10.0" layoutY="244.0" prefHeight="17.0" prefWidth="74.0" text="Примечания" />
+      <TextArea fx:id="remarkArea" disable="true" layoutX="91.0" layoutY="244.0" prefHeight="50.0" prefWidth="149.0" />
+      <Label layoutX="10.0" layoutY="131.0" text="Код МКБ" />
+      <TextField fx:id="clinicalCodeField" editable="false" layoutX="92.0" layoutY="128.0" />
    </children>
 </AnchorPane>

@@ -19,7 +19,7 @@ public class AnalysisResultDAO {
 
     private final @NotNull String SAVE_ANALYSIS_RESULT = "INSERT INTO analysis_result (executed_date, patient_id, result, next_date, analysis_name) VALUES (?, ?, ?, ?, ?)";
 
-    private final @NotNull String UPDATE_ANALYSIS_RESULT = "UPDATE analysis_result SET executed_id = ?, patient_id = ?, result = ?, next_date = ?, analysis_name = ? WHERE analysis_result_id = ?";
+    private final @NotNull String UPDATE_ANALYSIS_RESULT = "UPDATE analysis_result SET executed_date = ?, patient_id = ?, result = ?, next_date = ?, analysis_name = ? WHERE analysis_result_id = ?";
 
     private final @NotNull String REMOVE_ANALYSIS_RESULT = "DELETE FROM analysis_result WHERE analysis_result_id = ?";
 

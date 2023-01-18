@@ -9,7 +9,9 @@ import com.dolzhenko_m_s.doctorhelpsystem.models.Patient;
 import com.dolzhenko_m_s.doctorhelpsystem.services.AnalysisResultService;
 import com.dolzhenko_m_s.doctorhelpsystem.services.NotificationService;
 import com.dolzhenko_m_s.doctorhelpsystem.services.TelephoneSurveyService;
+import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -45,6 +47,7 @@ public class MainController {
     public Button addNotificationButton;
     public Button removeNotificationButton;
     public Button removePatientButton;
+    public Label allPatientsSize;
 
     @FXML
     private void initialize() {
@@ -74,7 +77,6 @@ public class MainController {
         notificationTable.getColumns().addAll(colId, colExecuted);
 
         addButtonToNotificationTable();
-        notificationTable.setVisible(false);
     }
 
     private void initPatientTable() {
@@ -82,13 +84,24 @@ public class MainController {
         fillPatientTable(new PatientDAO().all());
         patientTable.setItems(patientObservableList);
 
+        TableColumn numberCol = new TableColumn("№");
+        numberCol.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Patient, String>, ObservableValue<String>>() {
+            @Override public ObservableValue<String> call(TableColumn.CellDataFeatures<Patient, String> p) {
+                return new ReadOnlyObjectWrapper(patientTable.getItems().indexOf(p.getValue()) + 1 + "");
+            }
+        });
+        numberCol.setSortable(false);
+
         TableColumn<Patient, Integer> colId = new TableColumn<>("ФИО");
         colId.setCellValueFactory(new PropertyValueFactory<>("name"));
 
         TableColumn<Patient, String> colName = new TableColumn<>("Телефон");
         colName.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
 
-        patientTable.getColumns().addAll(colId, colName);
+        TableColumn<Patient, String> colRemark = new TableColumn<>("Примечание");
+        colRemark.setCellValueFactory(new PropertyValueFactory<>("remark"));
+
+        patientTable.getColumns().addAll(numberCol, colId, colName, colRemark);
 
         addButtonToPatientTable();
         patientTable.setVisible(false);
@@ -176,7 +189,7 @@ public class MainController {
                     {
                         btn.setOnAction((ActionEvent event) -> {
                             Notification data = getTableView().getItems().get(getIndex());
-                            System.out.println("selectedData: " + data);
+                            openNotificationWindow(new PatientDAO().get((int) data.getPatientId()),data);
                         });
                     }
 
@@ -202,6 +215,7 @@ public class MainController {
         if(actionEvent.getSource() instanceof final Button button) {
             if(button.getId().equals("patientsList")) {
                 patientTable.setVisible(!patientTable.isVisible());
+                allPatientsSize.setText(patientTable.getItems().size() > 0 ? "Всего " + patientTable.getItems().size() : "");
             }
             if(button.getId().equals("notificationsList")) {
                 notificationTable.setVisible(!notificationTable.isVisible());
@@ -218,15 +232,17 @@ public class MainController {
         if(searchTag.getText().equals("") || searchType.getValue() == null) {
             patientTable.getItems().clear();
             fillPatientTable(list);
+            allPatientsSize.setVisible(true);
+            allPatientsSize.setText("Всего " + patientTable.getItems().size());
             return;
         }
 
         if(searchType.getValue().equals("Телефон")) {
-            sortedList = list.stream().filter(p -> p.getPhoneNumber().startsWith(searchTag.getText())).toList();
+            sortedList = list.stream().filter(p -> p.getPhoneNumber().toLowerCase().contains(searchTag.getText())).toList();
         }
 
         if(searchType.getValue().equals("ФИО")) {
-            sortedList = list.stream().filter(p -> p.getName().startsWith(searchTag.getText())).toList();
+            sortedList = list.stream().filter(p -> p.getName().toLowerCase().contains(searchTag.getText())).toList();
         }
 
         if(sortedList != null && sortedList.isEmpty()) {
@@ -237,6 +253,8 @@ public class MainController {
             patientTable.getItems().clear();
             fillPatientTable(sortedList);
             patientTable.setVisible(true);
+            allPatientsSize.setVisible(true);
+            allPatientsSize.setText("Всего " + patientTable.getItems().size());
         }
     }
 

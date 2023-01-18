@@ -21,12 +21,14 @@ public class PatientController {
     public TextField diagnosisTextField;
     public DatePicker datePicker;
     public TextArea remarkArea;
+    public TextField clinicalCodeField;
 
     public void savePatient(ActionEvent actionEvent) {
         var patient = new Patient();
         patient.setName(nameTextField.getText());
         patient.setPhoneNumber(phoneTextField.getText());
         patient.setAddress(addressTextField.getText());
+        patient.setClinicalCode(clinicalCodeField.getText());
         patient.setDiagnosis(diagnosisTextField.getText());
         patient.setBirthDate(Date.valueOf(datePicker.getValue()));
         patient.setRemark(remarkArea.getText());

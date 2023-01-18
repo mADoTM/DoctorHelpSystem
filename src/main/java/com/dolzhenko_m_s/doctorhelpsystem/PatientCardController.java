@@ -53,6 +53,7 @@ public class PatientCardController {
     public Button removeNotificationButton;
     public TextArea remarkArea;
     public DatePicker datePicker;
+    public TextField clinicalCodeField;
 
     private Patient patient;
 
@@ -64,6 +65,7 @@ public class PatientCardController {
         nameTextField.setText(patient.getName());
         phoneTextField.setText(patient.getPhoneNumber());
         addressTextField.setText(patient.getAddress());
+        clinicalCodeField.setText(patient.getClinicalCode());
         diagnosisTextField.setText(patient.getDiagnosis());
         remarkArea.setText(patient.getRemark());
         datePicker.setValue(patient.getBirthDate().toLocalDate());
@@ -81,6 +83,7 @@ public class PatientCardController {
         phoneTextField.setEditable(editCheckBox.isSelected());
         diagnosisTextField.setEditable(editCheckBox.isSelected());
         addressTextField.setEditable(editCheckBox.isSelected());
+        clinicalCodeField.setEditable(editCheckBox.isSelected());
         saveButton.setDisable(!editCheckBox.isSelected());
         remarkArea.setDisable(!editCheckBox.isSelected());
         datePicker.setDisable(!editCheckBox.isSelected());
@@ -91,6 +94,7 @@ public class PatientCardController {
 
         patient.setName(nameTextField.getText());
         patient.setAddress(addressTextField.getText());
+        patient.setClinicalCode(clinicalCodeField.getText());
         patient.setDiagnosis(diagnosisTextField.getText());
         patient.setPhoneNumber(phoneTextField.getText());
         patient.setBirthDate(Date.valueOf(datePicker.getValue()));

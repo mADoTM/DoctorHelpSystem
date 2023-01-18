@@ -18,6 +18,8 @@ public class Patient {
 
     private @NotNull String address;
 
+    private @NotNull String clinicalCode;
+
     private @NotNull String diagnosis;
 
     private @NotNull Date birthDate;

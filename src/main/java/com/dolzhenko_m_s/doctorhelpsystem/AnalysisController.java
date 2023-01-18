@@ -77,9 +77,14 @@ public class AnalysisController {
         if(createdWindow) {
             new AnalysisResultDAO().save(new AnalysisResult(0, patient.getId(), analysisName, result, executedDate, nextDate));
         } else {
-
+            analysisResult.setAnalysisName(analysisName);
+            analysisResult.setResult(result);
+            analysisResult.setExecutedAnalysisDate(executedDate);
+            analysisResult.setNextAnalysisDate(nextDate);
             new AnalysisResultDAO().update(analysisResult);
         }
+        String action = "сдать " + analysisName;
+        new NotificationDAO().save(new Notification(0, patient.getId(), nextDate, action, false));
 
         Stage stage = (Stage) analysisTypeBox.getScene().getWindow();
         stage.close();
