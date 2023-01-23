@@ -32,9 +32,9 @@ public class TelephoneSurvey {
 
     private boolean hasEveryDayControl;
 
-    private double upperBloodPressure;
+    private int upperBloodPressure;
 
-    private double lowerBloodPressure;
+    private int lowerBloodPressure;
 
     private int heartRate;
 

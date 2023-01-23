@@ -76,6 +76,19 @@ public class MainController {
 
         notificationTable.getColumns().addAll(colId, colExecuted);
 
+        notificationTable.setRowFactory(tv -> new TableRow<Notification>() {
+            @Override
+            protected void updateItem(Notification item, boolean empty) {
+                super.updateItem(item, empty);
+                if (item == null)
+                    setStyle("");
+                else if (item.isExecuted())
+                    setStyle("-fx-background-color: #16e016;");
+                else
+                    setStyle("");
+            }
+        });
+
         addButtonToNotificationTable();
     }
 
@@ -98,10 +111,13 @@ public class MainController {
         TableColumn<Patient, String> colName = new TableColumn<>("Телефон");
         colName.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
 
+        TableColumn<Patient, Integer> colBirthDate = new TableColumn<>("Дата рождения");
+        colBirthDate.setCellValueFactory(new PropertyValueFactory<>("birthDate"));
+
         TableColumn<Patient, String> colRemark = new TableColumn<>("Примечание");
         colRemark.setCellValueFactory(new PropertyValueFactory<>("remark"));
 
-        patientTable.getColumns().addAll(numberCol, colId, colName, colRemark);
+        patientTable.getColumns().addAll(numberCol, colId, colName, colBirthDate,colRemark);
 
         addButtonToPatientTable();
         patientTable.setVisible(false);
@@ -216,6 +232,7 @@ public class MainController {
             if(button.getId().equals("patientsList")) {
                 patientTable.setVisible(!patientTable.isVisible());
                 allPatientsSize.setText(patientTable.getItems().size() > 0 ? "Всего " + patientTable.getItems().size() : "");
+                findPatients(new ActionEvent());
             }
             if(button.getId().equals("notificationsList")) {
                 notificationTable.setVisible(!notificationTable.isVisible());

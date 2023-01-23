@@ -147,8 +147,8 @@ public class TelephoneSurveyController {
             telephoneSurvey.setHasEveryDayControl(getBooleanByAnswer(hasEveryDayControl));
             telephoneSurvey.setMass(Double.parseDouble(mass.getText()));
             telephoneSurvey.setMassChanged(getBooleanByAnswer(isMassChanged));
-            telephoneSurvey.setUpperBloodPressure(Double.parseDouble(upperBloodPressure.getText()));
-            telephoneSurvey.setLowerBloodPressure(Double.parseDouble(lowerBloodPressure.getText()));
+            telephoneSurvey.setUpperBloodPressure(Integer.parseInt(upperBloodPressure.getText()));
+            telephoneSurvey.setLowerBloodPressure(Integer.parseInt(lowerBloodPressure.getText()));
             telephoneSurvey.setHeartRate(Integer.parseInt(heartRate.getText()));
             telephoneSurvey.setRegularlyTakePills(getBooleanByAnswer(regularlyTakePills));
             telephoneSurvey.setForgotTakePills(getBooleanByAnswer(forgotTakePills));

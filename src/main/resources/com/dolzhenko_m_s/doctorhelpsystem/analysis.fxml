@@ -5,7 +5,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="240.0" prefWidth="285.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dolzhenko_m_s.doctorhelpsystem.AnalysisController">
+<AnchorPane prefHeight="276.0" prefWidth="285.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dolzhenko_m_s.doctorhelpsystem.AnalysisController">
    <children>
       <Label layoutX="12.0" layoutY="23.0" text="Анализ" />
        <ChoiceBox fx:id="analysisTypeBox" layoutX="85.0" layoutY="19.0" onAction="#switchResultAbility" prefHeight="25.0" prefWidth="175.0">
@@ -20,14 +20,15 @@
                </FXCollections>
            </items>
        </ChoiceBox>
-      <Label fx:id="resultLabel" layoutX="12.0" layoutY="124.0" text="Результат" />
-      <TextField fx:id="resultField" layoutX="84.0" layoutY="120.0" prefHeight="25.0" prefWidth="175.0" />
-      <Label layoutX="12.0" layoutY="59.0" text="Выполнен" />
-      <DatePicker fx:id="executedDatePicker" layoutX="86.0" layoutY="55.0" />
-      <Label layoutX="12.0" layoutY="89.0" text="Следующий " />
-      <DatePicker fx:id="nextDatePicker" layoutX="86.0" layoutY="85.0" />
-      <Button fx:id="endActionButton" layoutX="110.0" layoutY="188.0" mnemonicParsing="false" onAction="#endAction" text="Button" />
-      <Label fx:id="lpLabel" layoutX="12.0" layoutY="155.0" prefHeight="17.0" prefWidth="17.0" text="ЛП" />
-      <TextField fx:id="lpField" layoutX="84.0" layoutY="151.0" prefHeight="25.0" prefWidth="175.0" />
+      <Label fx:id="resultLabel" layoutX="12.0" layoutY="156.0" text="Результат" />
+      <TextField fx:id="resultField" layoutX="84.0" layoutY="152.0" prefHeight="25.0" prefWidth="175.0" />
+      <Label layoutX="12.0" layoutY="91.0" text="Выполнен" />
+      <DatePicker fx:id="executedDatePicker" layoutX="86.0" layoutY="87.0" />
+      <Label layoutX="12.0" layoutY="121.0" text="Следующий " />
+      <DatePicker fx:id="nextDatePicker" layoutX="86.0" layoutY="117.0" />
+      <Button fx:id="endActionButton" layoutX="110.0" layoutY="227.0" mnemonicParsing="false" onAction="#endAction" text="Button" />
+      <Label fx:id="lpLabel" layoutX="12.0" layoutY="187.0" prefHeight="17.0" prefWidth="17.0" text="ЛП" />
+      <TextField fx:id="lpField" layoutX="84.0" layoutY="183.0" prefHeight="25.0" prefWidth="175.0" />
+      <CheckBox fx:id="possibleCheckBox" onAction="#setPossibleResult" layoutX="10.0" layoutY="57.0" mnemonicParsing="false" selected="true" text="Возможен" />
    </children>
 </AnchorPane>

@@ -38,7 +38,7 @@
          <font>
             <Font name="Century Gothic" size="14.0" />
          </font></Button>
-      <TableView fx:id="notificationTable" layoutX="11.0" layoutY="81.0" maxHeight="200.0" maxWidth="400.0" prefHeight="128.0" prefWidth="400.0">
+      <TableView fx:id="notificationTable" layoutX="11.0" layoutY="81.0" maxHeight="200.0" prefHeight="128.0" AnchorPane.leftAnchor="11.0" AnchorPane.rightAnchor="10.0">
         <columns>
         </columns>
          <columnResizePolicy>
@@ -57,12 +57,12 @@
          <font>
             <Font name="Century Gothic" size="14.0" />
          </font></Button>
-      <Label fx:id="allPatientsSize"  layoutX="240.0" layoutY="293.0">
+      <Label fx:id="allPatientsSize" layoutX="240.0" layoutY="293.0">
           <font>
               <Font name="Century Gothic" size="14.0" />
           </font>
       </Label>
-      <TableView fx:id="patientTable" layoutX="11.0" layoutY="322.0" maxHeight="200.0" maxWidth="400.0" prefHeight="128.0" prefWidth="400.0">
+      <TableView fx:id="patientTable" layoutX="11.0" layoutY="322.0" maxHeight="200.0" prefHeight="128.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="11.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="322.0">
         <columns>
         </columns>
          <columnResizePolicy>

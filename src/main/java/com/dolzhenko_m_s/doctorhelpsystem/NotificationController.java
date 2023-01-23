@@ -4,10 +4,7 @@ import com.dolzhenko_m_s.doctorhelpsystem.dao.NotificationDAO;
 import com.dolzhenko_m_s.doctorhelpsystem.models.Notification;
 import com.dolzhenko_m_s.doctorhelpsystem.models.Patient;
 import javafx.event.ActionEvent;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.sql.Date;
@@ -18,6 +15,7 @@ public class NotificationController {
     public DatePicker datePicker;
     public CheckBox executedBox;
     public Button endActionButton;
+    public Label patientNameLabel;
 
     private Patient patient;
     private Notification notification;
@@ -33,6 +31,7 @@ public class NotificationController {
             actionArea.setText(notification.getAction());
             executedBox.setSelected(notification.isExecuted());
             datePicker.setValue(notification.getDate().toLocalDate());
+            patientNameLabel.setText("Пациент - " + patient.getName());
         }
 
         endActionButton.setText(createdWindow ? "Добавить" : "Сохранить");

@@ -31,7 +31,7 @@ public class PatientCardController {
     public TextField nameTextField;
     public TextField phoneTextField;
     public TextField addressTextField;
-    public TextField diagnosisTextField;
+    public TextArea diagnosisTextField;
 
     public CheckBox editCheckBox;
     public Button saveButton;
@@ -182,6 +182,19 @@ public class PatientCardController {
         });
 
         notificationTable.getColumns().addAll(colId, colExecuted);
+
+        notificationTable.setRowFactory(tv -> new TableRow<Notification>() {
+            @Override
+            protected void updateItem(Notification item, boolean empty) {
+                super.updateItem(item, empty);
+                if (item == null)
+                    setStyle("");
+                else if (item.isExecuted())
+                    setStyle("-fx-background-color: #16e016;");
+                else
+                    setStyle("");
+            }
+        });
 
         addButtonToNotificationTable();
     }

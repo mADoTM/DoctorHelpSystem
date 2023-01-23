@@ -21,6 +21,7 @@ public class AnalysisController {
     public TextField lpField;
     public Label resultLabel;
     public Label lpLabel;
+    public CheckBox possibleCheckBox;
 
     private Patient patient;
     private AnalysisResult analysisResult;
@@ -40,9 +41,11 @@ public class AnalysisController {
 
         if(!createdWindow) {
             analysisTypeBox.setValue(analysisResult.getAnalysisName());
-            executedDatePicker.setValue(analysisResult.getExecutedAnalysisDate().toLocalDate());
-            nextDatePicker.setValue(analysisResult.getNextAnalysisDate().toLocalDate());
-            analysisTypeBox.setValue(analysisResult.getAnalysisName());
+            possibleCheckBox.setSelected(analysisResult.isPossible());
+            if(analysisResult.getExecutedAnalysisDate() != null)
+                executedDatePicker.setValue(analysisResult.getExecutedAnalysisDate().toLocalDate());
+            if(analysisResult.getNextAnalysisDate() != null)
+                nextDatePicker.setValue(analysisResult.getNextAnalysisDate().toLocalDate());
 
             String[] results = analysisResult.getResult().split(";");
             resultField.setText(results[0]);
@@ -59,8 +62,11 @@ public class AnalysisController {
             return;
         }
 
+        boolean possible = possibleCheckBox.isSelected();
         String analysisName = analysisTypeBox.getValue();
-        Date executedDate = Date.valueOf(executedDatePicker.getValue());
+        Date executedDate = null;
+        if(possible)
+            executedDate = Date.valueOf(executedDatePicker.getValue());
         String result = "";
         if (analysisName.equals("ЭХО-КГ")) {
             result = resultField.getText() + ";" + lpField.getText();
@@ -68,14 +74,17 @@ public class AnalysisController {
             result = resultField.getText();
         }
         Date nextDate = null;
-        if(nextDatePicker.getValue() == null) {
-            nextDate = Date.valueOf(executedDatePicker.getValue().plusYears(1));
-        } else {
-            nextDate = Date.valueOf(nextDatePicker.getValue());
+        if(possible) {
+            if(nextDatePicker.getValue() == null) {
+                nextDate = Date.valueOf(executedDatePicker.getValue().plusYears(1));
+            } else {
+                nextDate = Date.valueOf(nextDatePicker.getValue());
+            }
         }
 
+
         if(createdWindow) {
-            new AnalysisResultDAO().save(new AnalysisResult(0, patient.getId(), analysisName, result, executedDate, nextDate));
+            new AnalysisResultDAO().save(new AnalysisResult(0, patient.getId(), analysisName, result, possible,executedDate, nextDate));
         } else {
             analysisResult.setAnalysisName(analysisName);
             analysisResult.setResult(result);
@@ -83,8 +92,11 @@ public class AnalysisController {
             analysisResult.setNextAnalysisDate(nextDate);
             new AnalysisResultDAO().update(analysisResult);
         }
-        String action = "сдать " + analysisName;
-        new NotificationDAO().save(new Notification(0, patient.getId(), nextDate, action, false));
+
+        if(possible) {
+            String action = "сдать " + analysisName;
+            new NotificationDAO().save(new Notification(0, patient.getId(), nextDate, action, false));
+        }
 
         Stage stage = (Stage) analysisTypeBox.getScene().getWindow();
         stage.close();
@@ -106,5 +118,12 @@ public class AnalysisController {
         final var resultedAnalysies = analysisType.equals("ЭХО-КГ") || analysisType.equals("ТЕСТ 6MX") || analysisType.equals("NT-proBNP");
         resultLabel.setVisible(resultedAnalysies);
         resultField.setVisible(resultedAnalysies);
+    }
+
+    public void setPossibleResult(ActionEvent actionEvent) {
+        nextDatePicker.setEditable(possibleCheckBox.isSelected());
+        executedDatePicker.setEditable(possibleCheckBox.isSelected());
+        resultField.setEditable(possibleCheckBox.isSelected());
+        lpField.setEditable(possibleCheckBox.isSelected());
     }
 }

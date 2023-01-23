@@ -20,7 +20,7 @@
                 </HBox>
                 <HBox>
                     <Label layoutX="7.0" layoutY="14.0" prefHeight="17.0" prefWidth="300.0" text="Были ли госпитализации" />
-                    <ChoiceBox onAction="#switchHospitalization" fx:id="hasHospitalization" layoutX="62.0" layoutY="42.0" prefHeight="25.0" prefWidth="175.0" value="Нет">
+                    <ChoiceBox fx:id="hasHospitalization" layoutX="62.0" layoutY="42.0" onAction="#switchHospitalization" prefHeight="25.0" prefWidth="175.0" value="Нет">
                         <items>
                             <FXCollections fx:factory="observableArrayList">
                                 <String fx:value="Нет" />
@@ -144,7 +144,7 @@
                 </HBox>
                 <HBox>
                     <Label layoutX="7.0" layoutY="14.0" prefHeight="17.0" prefWidth="300.0" text="Сердцебиение/перебои" />
-                    <ChoiceBox  fx:id="hasHeartInterruptions" layoutX="62.0" layoutY="42.0" prefHeight="25.0" prefWidth="175.0" value="Нет">
+                    <ChoiceBox fx:id="hasHeartInterruptions" layoutX="62.0" layoutY="42.0" prefHeight="25.0" prefWidth="175.0" value="Нет">
                         <items>
                             <FXCollections fx:factory="observableArrayList">
                                 <String fx:value="Нет" />
@@ -195,7 +195,7 @@
                 </HBox>
                 <HBox>
                     <Label layoutX="7.0" layoutY="14.0" prefHeight="17.0" prefWidth="300.0" text="Вес, кг" />
-                    <TextField fx:id="mass" prefHeight="25.0" prefWidth="40.0">
+                    <TextField fx:id="mass" prefHeight="25.0" prefWidth="53.0">
                         <HBox.margin>
                             <Insets left="50.0" />
                         </HBox.margin>
@@ -391,7 +391,7 @@
                 </HBox>
                 <HBox>
                     <Label layoutX="7.0" layoutY="14.0" prefHeight="17.0" prefWidth="300.0" text="Следующий" />
-                    <DatePicker fx:id="nextSurvey"  layoutX="62.0" layoutY="10.0" prefWidth="174.0">
+                    <DatePicker fx:id="nextSurvey" layoutX="62.0" layoutY="10.0" prefWidth="174.0">
                         <HBox.margin>
                             <Insets left="50.0" />
                         </HBox.margin>
@@ -403,5 +403,5 @@
             </VBox>
         </AnchorPane>
     </ScrollPane>
-    <Button fx:id="saveButton" onAction="#saveSurvey" layoutX="246.0" layoutY="416.0" mnemonicParsing="false" text="Сохранить" />
+    <Button fx:id="saveButton" layoutX="246.0" layoutY="416.0" mnemonicParsing="false" onAction="#saveSurvey" text="Сохранить" />
 </AnchorPane>

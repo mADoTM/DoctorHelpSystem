@@ -36,8 +36,8 @@ public class TelephoneSurveyDAO {
                             resultSet.getBoolean("has_heart_interruptions"),
                             resultSet.getBoolean("has_pain_during_physical"),
                             resultSet.getBoolean("has_everyday_control"),
-                            resultSet.getDouble("upper_blood_pressure"),
-                            resultSet.getDouble("lower_blood_pressure"),
+                            resultSet.getInt("upper_blood_pressure"),
+                            resultSet.getInt("lower_blood_pressure"),
                             resultSet.getInt("heart_rate"),
                             resultSet.getDouble("mass"),
                             resultSet.getBoolean("is_mass_changed"),
@@ -76,8 +76,8 @@ public class TelephoneSurveyDAO {
                             resultSet.getBoolean("has_heart_interruptions"),
                             resultSet.getBoolean("has_pain_during_physical"),
                             resultSet.getBoolean("has_everyday_control"),
-                            resultSet.getDouble("upper_blood_pressure"),
-                            resultSet.getDouble("lower_blood_pressure"),
+                            resultSet.getInt("upper_blood_pressure"),
+                            resultSet.getInt("lower_blood_pressure"),
                             resultSet.getInt("heart_rate"),
                             resultSet.getDouble("mass"),
                             resultSet.getBoolean("is_mass_changed"),
@@ -200,8 +200,8 @@ public class TelephoneSurveyDAO {
             preparedStatement.setBoolean(8, entity.isHasHeartInterruptions());
             preparedStatement.setBoolean(9, entity.isHasPainDuringPhysicalExercise());
             preparedStatement.setBoolean(10, entity.isHasEveryDayControl());
-            preparedStatement.setDouble(11, entity.getUpperBloodPressure());
-            preparedStatement.setDouble(12, entity.getLowerBloodPressure());
+            preparedStatement.setInt(11, entity.getUpperBloodPressure());
+            preparedStatement.setInt(12, entity.getLowerBloodPressure());
             preparedStatement.setInt(13, entity.getHeartRate());
             preparedStatement.setDouble(14, entity.getMass());
             preparedStatement.setBoolean(15, entity.isMassChanged());
@@ -228,8 +228,8 @@ public class TelephoneSurveyDAO {
                             resultSet.getBoolean("has_heart_interruptions"),
                             resultSet.getBoolean("has_pain_during_physical"),
                             resultSet.getBoolean("has_everyday_control"),
-                            resultSet.getDouble("upper_blood_pressure"),
-                            resultSet.getDouble("lower_blood_pressure"),
+                            resultSet.getInt("upper_blood_pressure"),
+                            resultSet.getInt("lower_blood_pressure"),
                             resultSet.getInt("heart_rate"),
                             resultSet.getDouble("mass"),
                             resultSet.getBoolean("is_mass_changed"),

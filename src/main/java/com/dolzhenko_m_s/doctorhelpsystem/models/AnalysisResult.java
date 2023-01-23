@@ -19,7 +19,9 @@ public class AnalysisResult {
 
     private @NotNull String result;
 
-    private @NotNull Date executedAnalysisDate;
+    private boolean possible;
 
-    private @Nullable Date nextAnalysisDate;
+    private Date executedAnalysisDate;
+
+    private Date nextAnalysisDate;
 }

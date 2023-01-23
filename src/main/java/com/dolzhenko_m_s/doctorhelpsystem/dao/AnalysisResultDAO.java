@@ -15,11 +15,11 @@ public class AnalysisResultDAO {
 
     private final @NotNull String GET_ANALYSIS_RESULT_BY_ID = "SELECT * FROM analysis_result WHERE analysis_result_id = ";
 
-    private final @NotNull String GET_ANALYSIS_RESULT_BY_ALL_FIELDS = "SELECT * FROM analysis_result WHERE executed_date = ? AND patient_id = ? AND result = ? AND analysis_name = ? AND  next_date ";
+    private final @NotNull String GET_ANALYSIS_RESULT_BY_ALL_FIELDS = "SELECT * FROM analysis_result WHERE patient_id = ? AND result = ? AND possible = ? AND analysis_name = ? AND executed_date ";
 
-    private final @NotNull String SAVE_ANALYSIS_RESULT = "INSERT INTO analysis_result (executed_date, patient_id, result, next_date, analysis_name) VALUES (?, ?, ?, ?, ?)";
+    private final @NotNull String SAVE_ANALYSIS_RESULT = "INSERT INTO analysis_result (executed_date, patient_id, result, next_date, analysis_name, possible) VALUES (?, ?, ?, ?, ?, ?)";
 
-    private final @NotNull String UPDATE_ANALYSIS_RESULT = "UPDATE analysis_result SET executed_date = ?, patient_id = ?, result = ?, next_date = ?, analysis_name = ? WHERE analysis_result_id = ?";
+    private final @NotNull String UPDATE_ANALYSIS_RESULT = "UPDATE analysis_result SET executed_date = ?, patient_id = ?, result = ?, next_date = ?, analysis_name = ?, possible = ? WHERE analysis_result_id = ?";
 
     private final @NotNull String REMOVE_ANALYSIS_RESULT = "DELETE FROM analysis_result WHERE analysis_result_id = ?";
 
@@ -31,6 +31,7 @@ public class AnalysisResultDAO {
                             resultSet.getInt("patient_id"),
                             resultSet.getString("analysis_name"),
                             resultSet.getString("result"),
+                            resultSet.getBoolean("possible"),
                             resultSet.getDate("executed_date"),
                             resultSet.getDate("next_date"));
                 }
@@ -52,6 +53,7 @@ public class AnalysisResultDAO {
                             resultSet.getInt("patient_id"),
                             resultSet.getString("analysis_name"),
                             resultSet.getString("result"),
+                            resultSet.getBoolean("possible"),
                             resultSet.getDate("executed_date"),
                             resultSet.getDate("next_date")));
                 }
@@ -73,6 +75,7 @@ public class AnalysisResultDAO {
             preparedStatement.setString(3, entity.getResult());
             preparedStatement.setDate(1, entity.getExecutedAnalysisDate());
             preparedStatement.setDate(4, entity.getNextAnalysisDate());
+            preparedStatement.setBoolean(6, entity.isPossible());
             preparedStatement.executeUpdate();
 
             entity = getByFields(entity);
@@ -92,7 +95,8 @@ public class AnalysisResultDAO {
             preparedStatement.setDate(4, entity.getNextAnalysisDate());
             preparedStatement.setString(3, entity.getResult());
             preparedStatement.setString(5, entity.getAnalysisName());
-            preparedStatement.setInt(6, (int) entity.getId());
+            preparedStatement.setBoolean(6, entity.isPossible());
+            preparedStatement.setInt(7, (int) entity.getId());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -113,16 +117,21 @@ public class AnalysisResultDAO {
     }
 
     public @NotNull AnalysisResult getByFields(AnalysisResult entity) {
-        final var getAnalysis = entity.getNextAnalysisDate() == null ? "IS NULL" : "= ?";
+        var getAnalysis = entity.getExecutedAnalysisDate() == null ? "IS NULL" : "= ?";
+        getAnalysis += " AND next_date ";
+        getAnalysis += entity.getNextAnalysisDate() == null ? "IS NULL" : "= ?";
         try (var preparedStatement = DbConnectionHelper
                 .getConnection()
                 .prepareStatement(GET_ANALYSIS_RESULT_BY_ALL_FIELDS + getAnalysis)) {
-            preparedStatement.setInt(2, (int) entity.getPatientId());
+            preparedStatement.setInt(1, (int) entity.getPatientId());
             preparedStatement.setString(4, entity.getAnalysisName());
-            preparedStatement.setString(3, entity.getResult());
-            preparedStatement.setDate(1, entity.getExecutedAnalysisDate());
+            preparedStatement.setBoolean(3, entity.isPossible());
+            preparedStatement.setString(2, entity.getResult());
+            if(entity.getExecutedAnalysisDate() != null) {
+                preparedStatement.setDate(5, entity.getExecutedAnalysisDate());
+            }
             if(entity.getNextAnalysisDate() != null) {
-                preparedStatement.setDate(5, entity.getNextAnalysisDate());
+                preparedStatement.setDate(6, entity.getNextAnalysisDate());
             }
             preparedStatement.execute();
             try (var resultSet = preparedStatement.executeQuery()) {
@@ -131,6 +140,7 @@ public class AnalysisResultDAO {
                             resultSet.getInt("patient_id"),
                             resultSet.getString("analysis_name"),
                             resultSet.getString("result"),
+                            resultSet.getBoolean("possible"),
                             resultSet.getDate("executed_date"),
                             resultSet.getDate("next_date"));
                 }
