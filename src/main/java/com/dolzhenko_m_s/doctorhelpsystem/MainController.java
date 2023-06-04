@@ -26,9 +26,8 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class MainController {
-    private final ObservableList<Patient> patientObservableList = FXCollections.observableArrayList();
 
-    private final ObservableList<Notification> notificationObservableList = FXCollections.observableArrayList();
+    private final ObservableList<Patient> patientObservableList = FXCollections.observableArrayList();
 
     public TableView<Patient> patientTable;
 
@@ -36,61 +35,15 @@ public class MainController {
 
     public Button patientsList;
 
-    public Button notificationsList;
     public ChoiceBox<String> searchType;
     public TextField searchTag;
     public Button addPatientButton;
-    public Button addNotificationButton;
-    public Button removeNotificationButton;
     public Button removePatientButton;
     public Label allPatientsSize;
 
     @FXML
     private void initialize() {
         initPatientTable();
-        initNotificationTable();
-    }
-
-    private void initNotificationTable() {
-        setNotificationTableAppearance();
-        fillNotificationTable(new NotificationService().getByMonthAfter(Date.valueOf(LocalDate.now())));
-        notificationTable.setItems(notificationObservableList);
-
-        TableColumn numberCol = new TableColumn("№");
-        numberCol.setCellValueFactory((Callback<TableColumn.CellDataFeatures<Notification, String>, ObservableValue<String>>) p -> new ReadOnlyObjectWrapper(notificationTable.getItems().indexOf(p.getValue()) + 1 + ""));
-        numberCol.setSortable(false);
-
-        TableColumn<Notification, Date> colId = new TableColumn<>("Выполнить до");
-        colId.setCellValueFactory(new PropertyValueFactory<>("date"));
-
-        TableColumn<Notification, Boolean> colExecuted = new TableColumn<>("Выполнено");
-        colExecuted.setCellValueFactory(cellData -> new SimpleBooleanProperty(cellData.getValue().isExecuted()));
-
-        colExecuted.setCellFactory(col -> new TableCell<Notification, Boolean>() {
-            @Override
-            protected void updateItem(Boolean item, boolean empty) {
-                super.updateItem(item, empty);
-                setText(empty ? null : item ? "Да" : "Нет");
-            }
-        });
-
-        notificationTable.getColumns().addAll(numberCol, colId, colExecuted);
-
-        notificationTable.setRowFactory(tv -> new TableRow<>() {
-            @Override
-            protected void updateItem(Notification item, boolean empty) {
-                super.updateItem(item, empty);
-                if (item == null)
-                    setStyle("");
-                else if (item.isDirected())
-                    setStyle("-fx-background-color: #1638e0;");
-                else
-                    setStyle("");
-
-            }
-        });
-
-        addButtonToNotificationTable();
     }
 
     private void initPatientTable() {
@@ -133,12 +86,6 @@ public class MainController {
         patientTable.setVisible(false);
     }
 
-    private void setNotificationTableAppearance() {
-        notificationTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-        notificationTable.setPrefWidth(600);
-        notificationTable.setPrefHeight(400);
-    }
-
     private void setPatientTableAppearance() {
         patientTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         patientTable.setPrefWidth(600);
@@ -147,10 +94,6 @@ public class MainController {
 
     private void fillPatientTable(List<Patient> patients) {
         patientObservableList.addAll(patients);
-    }
-
-    private void fillNotificationTable(List<Notification> notifications) {
-        notificationObservableList.addAll(notifications);
     }
 
     private void addButtonToPatientTable() {
@@ -244,12 +187,6 @@ public class MainController {
                 allPatientsSize.setText(patientTable.getItems().size() > 0 ? "Всего " + patientTable.getItems().size() : "");
                 findPatients(new ActionEvent());
             }
-            if (button.getId().equals("notificationsList")) {
-                notificationTable.setVisible(!notificationTable.isVisible());
-
-                notificationTable.getItems().clear();
-                fillNotificationTable(new NotificationService().getByMonthAfter(Date.valueOf(LocalDate.now())));
-            }
         }
     }
 
@@ -298,12 +235,6 @@ public class MainController {
                 throw new RuntimeException(e);
             }
         }
-
-        var selectedItemInPatientTable = patientTable.getSelectionModel().getSelectedItem();
-
-        if (button == addNotificationButton && selectedItemInPatientTable != null) {
-            openNotificationWindow(selectedItemInPatientTable, new Notification());
-        }
     }
 
     private void openNotificationWindow(Patient patient, Notification notification) {
@@ -330,21 +261,24 @@ public class MainController {
             }
         }
 
-        if (button == removeNotificationButton) {
-            if (notificationTable.getSelectionModel().getSelectedItem() != null) {
-                var notification = notificationTable.getSelectionModel().getSelectedItem();
-                new NotificationDAO().delete(notification);
-            }
-        }
-
         refreshItemsInTables();
     }
 
 
     private void refreshItemsInTables() {
         findPatients(new ActionEvent());
+    }
 
-        notificationTable.getItems().clear();
-        fillNotificationTable(new NotificationService().getByMonthAfter(Date.valueOf(LocalDate.now())));
+    @FXML
+    private void showAllNotifications(ActionEvent actionEvent) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("notification_table_menu.fxml"));
+        try {
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
