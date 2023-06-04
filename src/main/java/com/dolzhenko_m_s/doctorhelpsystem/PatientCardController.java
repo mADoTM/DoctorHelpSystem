@@ -54,6 +54,7 @@ public class PatientCardController {
     public TextArea remarkArea;
     public DatePicker datePicker;
     public TextField clinicalCodeField;
+    public CheckBox lowAnalysisCheckBox;
 
     private Patient patient;
 
@@ -69,6 +70,7 @@ public class PatientCardController {
         diagnosisTextField.setText(patient.getDiagnosis());
         remarkArea.setText(patient.getRemark());
         datePicker.setValue(patient.getBirthDate().toLocalDate());
+        lowAnalysisCheckBox.setSelected(patient.isHasLowAnalysis());
 
 
 
@@ -84,6 +86,7 @@ public class PatientCardController {
         diagnosisTextField.setEditable(editCheckBox.isSelected());
         addressTextField.setEditable(editCheckBox.isSelected());
         clinicalCodeField.setEditable(editCheckBox.isSelected());
+        lowAnalysisCheckBox.setDisable(!editCheckBox.isSelected());
         saveButton.setDisable(!editCheckBox.isSelected());
         remarkArea.setDisable(!editCheckBox.isSelected());
         datePicker.setDisable(!editCheckBox.isSelected());
@@ -99,6 +102,7 @@ public class PatientCardController {
         patient.setPhoneNumber(phoneTextField.getText());
         patient.setBirthDate(Date.valueOf(datePicker.getValue()));
         patient.setRemark(remarkArea.getText());
+        patient.setHasLowAnalysis(lowAnalysisCheckBox.isSelected());
 
         new PatientDAO().update(patient);
     }
@@ -189,8 +193,8 @@ public class PatientCardController {
                 super.updateItem(item, empty);
                 if (item == null)
                     setStyle("");
-                else if (item.isExecuted())
-                    setStyle("-fx-background-color: #16e016;");
+                else if (item.isDirected())
+                    setStyle("-fx-background-color: #1638e0;");
                 else
                     setStyle("");
             }

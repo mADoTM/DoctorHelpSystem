@@ -95,7 +95,7 @@ public class AnalysisController {
 
         if(possible) {
             String action = "сдать " + analysisName;
-            new NotificationDAO().save(new Notification(0, patient.getId(), nextDate, action, false));
+            new NotificationDAO().save(new Notification(0, patient.getId(), nextDate, action, false, false));
         }
 
         Stage stage = (Stage) analysisTypeBox.getScene().getWindow();

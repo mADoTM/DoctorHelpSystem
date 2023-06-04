@@ -171,7 +171,12 @@ public class TelephoneSurveyController {
                 new TelephoneSurveyDAO().update(telephoneSurvey);
             }
 
-            new NotificationDAO().save(new Notification(0, telephoneSurvey.getPatientId(), telephoneSurvey.getNextSurvey(), "телефонный опрос", false));
+            new NotificationDAO().save(new Notification(0,
+                    telephoneSurvey.getPatientId(),
+                    telephoneSurvey.getNextSurvey(),
+                    "телефонный опрос",
+                    false,
+                    false));
 
             Stage stage = (Stage) isMassChanged.getScene().getWindow();
             stage.close();

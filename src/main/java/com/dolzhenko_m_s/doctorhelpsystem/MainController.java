@@ -1,14 +1,10 @@
 package com.dolzhenko_m_s.doctorhelpsystem;
 
-import com.dolzhenko_m_s.doctorhelpsystem.dao.AnalysisResultDAO;
 import com.dolzhenko_m_s.doctorhelpsystem.dao.NotificationDAO;
 import com.dolzhenko_m_s.doctorhelpsystem.dao.PatientDAO;
-import com.dolzhenko_m_s.doctorhelpsystem.dao.TelephoneSurveyDAO;
 import com.dolzhenko_m_s.doctorhelpsystem.models.Notification;
 import com.dolzhenko_m_s.doctorhelpsystem.models.Patient;
-import com.dolzhenko_m_s.doctorhelpsystem.services.AnalysisResultService;
 import com.dolzhenko_m_s.doctorhelpsystem.services.NotificationService;
-import com.dolzhenko_m_s.doctorhelpsystem.services.TelephoneSurveyService;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ObservableValue;
@@ -60,6 +56,10 @@ public class MainController {
         fillNotificationTable(new NotificationService().getByMonthAfter(Date.valueOf(LocalDate.now())));
         notificationTable.setItems(notificationObservableList);
 
+        TableColumn numberCol = new TableColumn("№");
+        numberCol.setCellValueFactory((Callback<TableColumn.CellDataFeatures<Notification, String>, ObservableValue<String>>) p -> new ReadOnlyObjectWrapper(notificationTable.getItems().indexOf(p.getValue()) + 1 + ""));
+        numberCol.setSortable(false);
+
         TableColumn<Notification, Date> colId = new TableColumn<>("Выполнить до");
         colId.setCellValueFactory(new PropertyValueFactory<>("date"));
 
@@ -69,23 +69,24 @@ public class MainController {
         colExecuted.setCellFactory(col -> new TableCell<Notification, Boolean>() {
             @Override
             protected void updateItem(Boolean item, boolean empty) {
-                super.updateItem(item, empty) ;
-                setText(empty ? null : item ? "Да" : "Нет" );
+                super.updateItem(item, empty);
+                setText(empty ? null : item ? "Да" : "Нет");
             }
         });
 
-        notificationTable.getColumns().addAll(colId, colExecuted);
+        notificationTable.getColumns().addAll(numberCol, colId, colExecuted);
 
-        notificationTable.setRowFactory(tv -> new TableRow<Notification>() {
+        notificationTable.setRowFactory(tv -> new TableRow<>() {
             @Override
             protected void updateItem(Notification item, boolean empty) {
                 super.updateItem(item, empty);
                 if (item == null)
                     setStyle("");
-                else if (item.isExecuted())
-                    setStyle("-fx-background-color: #16e016;");
+                else if (item.isDirected())
+                    setStyle("-fx-background-color: #1638e0;");
                 else
                     setStyle("");
+
             }
         });
 
@@ -98,11 +99,7 @@ public class MainController {
         patientTable.setItems(patientObservableList);
 
         TableColumn numberCol = new TableColumn("№");
-        numberCol.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Patient, String>, ObservableValue<String>>() {
-            @Override public ObservableValue<String> call(TableColumn.CellDataFeatures<Patient, String> p) {
-                return new ReadOnlyObjectWrapper(patientTable.getItems().indexOf(p.getValue()) + 1 + "");
-            }
-        });
+        numberCol.setCellValueFactory((Callback<TableColumn.CellDataFeatures<Patient, String>, ObservableValue<String>>) p -> new ReadOnlyObjectWrapper(patientTable.getItems().indexOf(p.getValue()) + 1 + ""));
         numberCol.setSortable(false);
 
         TableColumn<Patient, Integer> colId = new TableColumn<>("ФИО");
@@ -117,7 +114,20 @@ public class MainController {
         TableColumn<Patient, String> colRemark = new TableColumn<>("Примечание");
         colRemark.setCellValueFactory(new PropertyValueFactory<>("remark"));
 
-        patientTable.getColumns().addAll(numberCol, colId, colName, colBirthDate,colRemark);
+        patientTable.getColumns().addAll(numberCol, colId, colName, colBirthDate, colRemark);
+
+        patientTable.setRowFactory(tv -> new TableRow<>() {
+            @Override
+            protected void updateItem(Patient item, boolean empty) {
+                super.updateItem(item, empty);
+                if (item == null)
+                    setStyle("");
+                else if (item.isHasLowAnalysis())
+                    setStyle("-fx-background-color: #e50707;");
+                else
+                    setStyle("");
+            }
+        });
 
         addButtonToPatientTable();
         patientTable.setVisible(false);
@@ -205,7 +215,7 @@ public class MainController {
                     {
                         btn.setOnAction((ActionEvent event) -> {
                             Notification data = getTableView().getItems().get(getIndex());
-                            openNotificationWindow(new PatientDAO().get((int) data.getPatientId()),data);
+                            openNotificationWindow(new PatientDAO().get((int) data.getPatientId()), data);
                         });
                     }
 
@@ -228,13 +238,13 @@ public class MainController {
     }
 
     public void showPatients(ActionEvent actionEvent) {
-        if(actionEvent.getSource() instanceof final Button button) {
-            if(button.getId().equals("patientsList")) {
+        if (actionEvent.getSource() instanceof final Button button) {
+            if (button.getId().equals("patientsList")) {
                 patientTable.setVisible(!patientTable.isVisible());
                 allPatientsSize.setText(patientTable.getItems().size() > 0 ? "Всего " + patientTable.getItems().size() : "");
                 findPatients(new ActionEvent());
             }
-            if(button.getId().equals("notificationsList")) {
+            if (button.getId().equals("notificationsList")) {
                 notificationTable.setVisible(!notificationTable.isVisible());
 
                 notificationTable.getItems().clear();
@@ -246,7 +256,7 @@ public class MainController {
     public void findPatients(ActionEvent actionEvent) {
         var list = new PatientDAO().all();
         List<Patient> sortedList = null;
-        if(searchTag.getText().equals("") || searchType.getValue() == null) {
+        if (searchTag.getText().equals("") || searchType.getValue() == null) {
             patientTable.getItems().clear();
             fillPatientTable(list);
             allPatientsSize.setVisible(true);
@@ -254,15 +264,15 @@ public class MainController {
             return;
         }
 
-        if(searchType.getValue().equals("Телефон")) {
+        if (searchType.getValue().equals("Телефон")) {
             sortedList = list.stream().filter(p -> p.getPhoneNumber().toLowerCase().contains(searchTag.getText())).toList();
         }
 
-        if(searchType.getValue().equals("ФИО")) {
+        if (searchType.getValue().equals("ФИО")) {
             sortedList = list.stream().filter(p -> p.getName().toLowerCase().contains(searchTag.getText())).toList();
         }
 
-        if(sortedList != null && sortedList.isEmpty()) {
+        if (sortedList != null && sortedList.isEmpty()) {
             var alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("Не было найдено пациентов по запросу: " + searchType.getValue() + " - " + searchTag.getText());
             alert.show();
@@ -277,11 +287,10 @@ public class MainController {
 
     public void addEntity(ActionEvent actionEvent) {
         var button = (Button) actionEvent.getSource();
-        if(button == addPatientButton) {
+        if (button == addPatientButton) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("patient.fxml"));
             try {
                 Parent root = loader.load();
-                var medController = (PatientController) loader.getController();
                 Stage stage = new Stage();
                 stage.setScene(new Scene(root));
                 stage.show();
@@ -292,7 +301,7 @@ public class MainController {
 
         var selectedItemInPatientTable = patientTable.getSelectionModel().getSelectedItem();
 
-        if(button == addNotificationButton && selectedItemInPatientTable != null) {
+        if (button == addNotificationButton && selectedItemInPatientTable != null) {
             openNotificationWindow(selectedItemInPatientTable, new Notification());
         }
     }

@@ -41,5 +41,6 @@
       <TextArea fx:id="remarkArea" disable="true" layoutX="91.0" layoutY="207.0" prefHeight="50.0" prefWidth="149.0" />
       <Label layoutX="10.0" layoutY="131.0" text="Код МКБ" />
       <TextField fx:id="clinicalCodeField" editable="false" layoutX="92.0" layoutY="128.0" />
+      <CheckBox fx:id="lowAnalysisCheckBox" disable="true" layoutX="11.0" layoutY="272.0" mnemonicParsing="false" text="ФВ &lt; 40" />
    </children>
 </AnchorPane>

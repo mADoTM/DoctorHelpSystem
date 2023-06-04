@@ -19,4 +19,6 @@ public class Notification {
     private @NotNull String action;
 
     private boolean executed;
+
+    private boolean directed;
 }

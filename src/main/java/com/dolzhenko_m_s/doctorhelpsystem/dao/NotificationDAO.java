@@ -13,11 +13,11 @@ public class NotificationDAO {
 
     private final @NotNull String GET_NOTIFICATION_BY_ID = "SELECT * FROM notification WHERE notification_id = ";
 
-    private final @NotNull String GET_NOTIFICATION_BY_ALL_FIELDS = "SELECT * FROM notification WHERE patient_id = ? AND date = ? AND action = ? AND executed = ?";
+    private final @NotNull String GET_NOTIFICATION_BY_ALL_FIELDS = "SELECT * FROM notification WHERE patient_id = ? AND date = ? AND action = ? AND executed = ? AND directed = ?";
 
-    private final @NotNull String SAVE_NOTIFICATION = "INSERT INTO notification (patient_id, date, action, executed) VALUES (?, ?, ?, ?)";
+    private final @NotNull String SAVE_NOTIFICATION = "INSERT INTO notification (patient_id, date, action, executed, directed) VALUES (?, ?, ?, ?, ?)";
 
-    private final @NotNull String UPDATE_NOTIFICATION = "UPDATE notification SET patient_id = ?, date = ?, action = ?, executed = ? WHERE notification_id = ?";
+    private final @NotNull String UPDATE_NOTIFICATION = "UPDATE notification SET patient_id = ?, date = ?, action = ?, executed = ?, directed = ? WHERE notification_id = ?";
 
     private final @NotNull String REMOVE_NOTIFICATION = "DELETE FROM notification WHERE notification_id = ?";
 
@@ -29,7 +29,8 @@ public class NotificationDAO {
                             resultSet.getInt("patient_id"),
                             resultSet.getDate("date"),
                             resultSet.getString("action"),
-                            resultSet.getBoolean("executed"));
+                            resultSet.getBoolean("executed"),
+                            resultSet.getBoolean("directed"));
                 }
             }
         } catch (SQLException e) {
@@ -49,7 +50,8 @@ public class NotificationDAO {
                             resultSet.getInt("patient_id"),
                             resultSet.getDate("date"),
                             resultSet.getString("action"),
-                            resultSet.getBoolean("executed")));
+                            resultSet.getBoolean("executed"),
+                            resultSet.getBoolean("directed")));
                 }
                 return result;
             }
@@ -68,6 +70,7 @@ public class NotificationDAO {
             preparedStatement.setDate(2, entity.getDate());
             preparedStatement.setString(3, entity.getAction());
             preparedStatement.setBoolean(4, entity.isExecuted());
+            preparedStatement.setBoolean(5, entity.isDirected());
             preparedStatement.executeUpdate();
 
             entity = getByFields(entity);
@@ -86,7 +89,8 @@ public class NotificationDAO {
             preparedStatement.setDate(2, entity.getDate());
             preparedStatement.setString(3, entity.getAction());
             preparedStatement.setBoolean(4, entity.isExecuted());
-            preparedStatement.setInt(5, (int) entity.getId());
+            preparedStatement.setBoolean(5, entity.isDirected());
+            preparedStatement.setInt(6, (int) entity.getId());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -114,6 +118,7 @@ public class NotificationDAO {
             preparedStatement.setDate(2, notification.getDate());
             preparedStatement.setString(3, notification.getAction());
             preparedStatement.setBoolean(4, notification.isExecuted());
+            preparedStatement.setBoolean(5, notification.isDirected());
             preparedStatement.execute();
             try (var resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
@@ -121,7 +126,8 @@ public class NotificationDAO {
                             resultSet.getInt("patient_id"),
                             resultSet.getDate("date"),
                             resultSet.getString("action"),
-                            resultSet.getBoolean("executed"));
+                            resultSet.getBoolean("executed"),
+                            resultSet.getBoolean("directed"));
                 }
             }
 

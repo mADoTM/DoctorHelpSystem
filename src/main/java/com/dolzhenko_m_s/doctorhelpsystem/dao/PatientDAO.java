@@ -13,11 +13,11 @@ public class PatientDAO {
 
     private final @NotNull String GET_PATIENT_BY_ID = "SELECT * FROM patient WHERE patient_id = ";
 
-    private final @NotNull String GET_PATIENT_BY_ALL_FIELDS = "SELECT * FROM patient WHERE name = ? AND phone = ? AND address = ? AND clinical_code = ? AND diagnosis = ? AND birth_date = ? AND remark = ?";
+    private final @NotNull String GET_PATIENT_BY_ALL_FIELDS = "SELECT * FROM patient WHERE name = ? AND phone = ? AND address = ? AND clinical_code = ? AND diagnosis = ? AND birth_date = ? AND remark = ? AND has_low_analysis = ?";
 
-    private final @NotNull String SAVE_PATIENT = "INSERT INTO patient (name, phone, address, clinical_code, diagnosis, birth_date, remark) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    private final @NotNull String SAVE_PATIENT = "INSERT INTO patient (name, phone, address, clinical_code, diagnosis, birth_date, remark, has_low_analysis) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
-    private final @NotNull String UPDATE_PATIENT = "UPDATE patient SET name = ?, phone = ?, address = ?, clinical_code = ?, diagnosis = ?, birth_date = ?, remark = ? WHERE patient_id = ?";
+    private final @NotNull String UPDATE_PATIENT = "UPDATE patient SET name = ?, phone = ?, address = ?, clinical_code = ?, diagnosis = ?, birth_date = ?, remark = ?, has_low_analysis = ? WHERE patient_id = ?";
 
     private final @NotNull String REMOVE_PATIENT = "DELETE FROM patient WHERE patient_id = ?";
 
@@ -32,7 +32,8 @@ public class PatientDAO {
                             resultSet.getString("clinical_code"),
                             resultSet.getString("diagnosis"),
                             resultSet.getDate("birth_date"),
-                            resultSet.getString("remark"));
+                            resultSet.getString("remark"),
+                            resultSet.getBoolean("has_low_analysis"));
                 }
             }
         } catch (SQLException e) {
@@ -53,7 +54,8 @@ public class PatientDAO {
                             resultSet.getString("clinical_code"),
                             resultSet.getString("diagnosis"),
                             resultSet.getDate("birth_date"),
-                            resultSet.getString("remark")));
+                            resultSet.getString("remark"),
+                            resultSet.getBoolean("has_low_analysis")));
                 }
                 return result;
             }
@@ -73,6 +75,7 @@ public class PatientDAO {
             preparedStatement.setString(5, entity.getDiagnosis());
             preparedStatement.setDate(6, entity.getBirthDate());
             preparedStatement.setString(7, entity.getRemark());
+            preparedStatement.setBoolean(8, entity.isHasLowAnalysis());
             preparedStatement.executeUpdate();
 
             entity = getByFields(entity);
@@ -92,7 +95,8 @@ public class PatientDAO {
             preparedStatement.setString(5, entity.getDiagnosis());
             preparedStatement.setDate(6, entity.getBirthDate());
             preparedStatement.setString(7, entity.getRemark());
-            preparedStatement.setInt(8, (int) entity.getId());
+            preparedStatement.setBoolean(8, entity.isHasLowAnalysis());
+            preparedStatement.setInt(9, (int) entity.getId());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -119,6 +123,7 @@ public class PatientDAO {
             preparedStatement.setString(5, patient.getDiagnosis());
             preparedStatement.setDate(6, patient.getBirthDate());
             preparedStatement.setString(7, patient.getRemark());
+            preparedStatement.setBoolean(8, patient.isHasLowAnalysis());
             preparedStatement.execute();
             try (var resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
@@ -129,7 +134,8 @@ public class PatientDAO {
                             resultSet.getString("clinical_code"),
                             resultSet.getString("diagnosis"),
                             resultSet.getDate("birth_date"),
-                            resultSet.getString("remark"));
+                            resultSet.getString("remark"),
+                            resultSet.getBoolean("has_low_analysis"));
                 }
             }
 

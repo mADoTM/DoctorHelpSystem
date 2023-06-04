@@ -14,6 +14,7 @@ public class NotificationController {
     public TextArea actionArea;
     public DatePicker datePicker;
     public CheckBox executedBox;
+    public CheckBox directedCheckBox;
     public Button endActionButton;
     public Label patientNameLabel;
 
@@ -32,6 +33,8 @@ public class NotificationController {
             executedBox.setSelected(notification.isExecuted());
             datePicker.setValue(notification.getDate().toLocalDate());
             patientNameLabel.setText("Пациент - " + patient.getName());
+            directedCheckBox.setSelected(notification.isDirected());
+            switchEditAbility(new ActionEvent());
         }
 
         endActionButton.setText(createdWindow ? "Добавить" : "Сохранить");
@@ -39,19 +42,26 @@ public class NotificationController {
 
     public void endAction(ActionEvent actionEvent) {
         String action = actionArea.getText();
-        Date date = Date.valueOf(datePicker.getValue());
+        boolean directed = directedCheckBox.isSelected();
         boolean executed = executedBox.isSelected();
 
+        Date date = directed ? Date.valueOf(LocalDate.now()) : Date.valueOf(datePicker.getValue());
+
         if(createdWindow) {
-            new NotificationDAO().save(new Notification(0, patient.getId(), date, action, executed));
+            new NotificationDAO().save(new Notification(0, patient.getId(), date, action, executed, directed));
         } else {
             notification.setAction(action);
             notification.setDate(date);
             notification.setExecuted(executed);
+            notification.setDirected(directed);
             new NotificationDAO().update(notification);
         }
 
         Stage stage = (Stage) actionArea.getScene().getWindow();
         stage.close();
+    }
+
+    public void switchEditAbility(ActionEvent actionEvent) {
+        datePicker.setDisable(directedCheckBox.isSelected());
     }
 }

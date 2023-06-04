@@ -25,4 +25,6 @@ public class Patient {
     private @NotNull Date birthDate;
 
     private @NotNull String remark;
+
+    private boolean hasLowAnalysis;
 }
