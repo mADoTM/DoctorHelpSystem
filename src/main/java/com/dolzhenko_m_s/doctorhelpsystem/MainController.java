@@ -40,6 +40,7 @@ public class MainController {
     public Button addPatientButton;
     public Button removePatientButton;
     public Label allPatientsSize;
+    public Button openSettingsButton;
 
     @FXML
     private void initialize() {
@@ -188,6 +189,7 @@ public class MainController {
                 findPatients(new ActionEvent());
             }
         }
+        System.out.println(allPatientsSize.getText());
     }
 
     public void findPatients(ActionEvent actionEvent) {
@@ -272,6 +274,18 @@ public class MainController {
     @FXML
     private void showAllNotifications(ActionEvent actionEvent) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("notification_table_menu.fxml"));
+        try {
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void openSettings(ActionEvent actionEvent) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("settings.fxml"));
         try {
             Parent root = loader.load();
             Stage stage = new Stage();

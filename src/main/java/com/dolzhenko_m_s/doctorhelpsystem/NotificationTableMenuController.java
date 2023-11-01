@@ -128,6 +128,7 @@ public class NotificationTableMenuController {
     }
 
     private void fillNotificationTable(List<Notification> notifications) {
+        notificationObservableList.clear();
         notificationObservableList.addAll(notifications);
     }
 

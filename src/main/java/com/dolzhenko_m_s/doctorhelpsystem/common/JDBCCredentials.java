@@ -1,5 +1,6 @@
 package com.dolzhenko_m_s.doctorhelpsystem.common;
 
+import com.dolzhenko_m_s.doctorhelpsystem.common.utils.FileReader;
 import org.jetbrains.annotations.NotNull;
 
 public final class JDBCCredentials {
@@ -14,7 +15,7 @@ public final class JDBCCredentials {
 
     private static final @NotNull String PREFIX = "jdbc:postgresql";
 
-    private final @NotNull String host;
+    public @NotNull String host;
     private final @NotNull String port;
     private final @NotNull String dbName;
     private final @NotNull String login;
@@ -45,4 +46,6 @@ public final class JDBCCredentials {
     public @NotNull String password() {
         return password;
     }
+
+
 }

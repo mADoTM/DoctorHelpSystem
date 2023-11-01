@@ -13,6 +13,8 @@ public class DbConnectionHelper {
     public static @NotNull Connection getConnection() throws SQLException {
         if(connection == null || connection.isClosed())
             connection = DriverManager.getConnection(CREDS.url(), CREDS.login(), CREDS.password());
+
+        System.out.println(CREDS.url());
         return connection;
     }
 
